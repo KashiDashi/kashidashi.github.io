@@ -15,14 +15,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate photo manifest
+      - name: Generate photo manifest (with subfolders)
         run: |
           python3 - <<'PYEOF'
           import os, json
-          exts = {'.jpg','.jpeg','.png','.gif','.webp','.avif'}
-          files = sorted(f for f in os.listdir('photos') if os.path.splitext(f.lower())[1] in exts)
-          with open('photos/manifest.json','w') as fp: json.dump(files, fp, indent=2)
-          print(f"Photos: {len(files)} files")
+
+          IMG_EXTS = {'.jpg','.jpeg','.png','.gif','.webp','.avif'}
+          result = {}   # { "folderName": ["file1.jpg", ...], ... }
+
+          photos_root = 'photos'
+
+          for entry in sorted(os.scandir(photos_root), key=lambda e: e.name):
+              if entry.is_dir():
+                  # Subfolder — collect images inside it
+                  folder_name = entry.name
+                  files = sorted(
+                      f for f in os.listdir(entry.path)
+                      if os.path.splitext(f.lower())[1] in IMG_EXTS
+                  )
+                  if files:
+                      result[folder_name] = files
+              elif entry.is_file():
+                  ext = os.path.splitext(entry.name.lower())[1]
+                  if ext in IMG_EXTS:
+                      # Root-level image — goes in a special "_root" group
+                      result.setdefault('_root', []).append(entry.name)
+
+          with open('photos/manifest.json', 'w') as fp:
+              json.dump(result, fp, indent=2)
+
+          total = sum(len(v) for v in result.values())
+          print(f"Photos manifest: {len(result)} folder(s), {total} image(s)")
+          for folder, files in result.items():
+              print(f"  {folder}: {len(files)} files")
           PYEOF
 
       - name: Generate music manifest

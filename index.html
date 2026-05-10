@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FILM FRAGMENTS</title>
+<title>★ FILM FRAGMENTS ★</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 
@@ -111,8 +111,11 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 .navbar {
   position:absolute; top:0; left:0; right:0; height:50px; z-index:20;
   display:flex; align-items:center; justify-content:space-between; padding:0 2rem;
-  background:linear-gradient(180deg,rgba(0,0,10,.92) 0%,transparent 100%);
-  border-bottom:1px solid rgba(68,136,255,.2);
+  /* Solid dark background so buttons always readable over photos */
+  background:rgba(0,0,8,.88);
+  border-bottom:1px solid rgba(0,255,68,.25);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
 }
 .nav-logo {
   font-family:'Orbitron',monospace; font-weight:900; font-size:1rem; letter-spacing:.3em;
@@ -121,19 +124,93 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
   filter:blur(.3px);
 }
 .nav-logo span{color:#00ff44;}
-.nav-links{display:flex;gap:2rem;align-items:center;}
-.nav-link{background:none;border:none;font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:.3em;color:#667788;cursor:pointer;padding:.3rem .5rem;text-transform:uppercase;transition:color .2s;}
-.nav-link:hover{color:#fff;}
-.nav-link.active{color:#00eeff;border-bottom:1px solid #00eeff;}
+.nav-links{display:flex;gap:.6rem;align-items:center;}
+.nav-link {
+  background:rgba(0,255,68,.08);
+  border:1px solid rgba(0,255,68,.3);
+  font-family:'Share Tech Mono',monospace;
+  font-size:.62rem; letter-spacing:.25em;
+  color:#aaffcc;
+  cursor:pointer; padding:.3rem .9rem;
+  text-transform:uppercase; transition:all .15s;
+  clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%);
+}
+.nav-link:hover {
+  background:rgba(0,255,68,.22);
+  color:#00ff44;
+  border-color:#00ff44;
+  text-shadow:0 0 8px #00ff44;
+}
+.nav-link.active {
+  background:rgba(0,238,255,.12);
+  color:#00eeff;
+  border-color:#00eeff;
+  text-shadow:0 0 8px #00eeff;
+}
 
 /* ══ PAGE 3 · HOME ══ */
 #home-page { background:#000; overflow:hidden; }
-#slide-bg { position:absolute; inset:0; background:#000; }
+
+/* Wrapper that holds ALL slide layers — the zoom+shake
+   is applied to this wrapper so slides AND gif move together */
+#slide-bg {
+  position:absolute; inset:0; background:#000;
+  /* Zoom slightly beyond the viewport so camera shake
+     doesn't reveal black edges */
+  transform-origin:center center;
+  animation:slideZoom 8s ease-in-out infinite alternate,
+            cameraShake 6s ease-in-out infinite;
+}
+/* Slow Ken-Burns-style zoom between 100% and 108% */
+@keyframes slideZoom {
+  0%   { transform:scale(1); }
+  100% { transform:scale(1.08); }
+}
+/* Subtle camera shake — small random-feeling translate offsets */
+@keyframes cameraShake {
+  0%   { transform:scale(var(--sz,1)) translate(0px,    0px); }
+  10%  { transform:scale(var(--sz,1)) translate(-2px,  1px); }
+  20%  { transform:scale(var(--sz,1)) translate(1px,   -2px); }
+  30%  { transform:scale(var(--sz,1)) translate(2px,   1px); }
+  40%  { transform:scale(var(--sz,1)) translate(-1px,  2px); }
+  50%  { transform:scale(var(--sz,1)) translate(0px,   -1px); }
+  60%  { transform:scale(var(--sz,1)) translate(1px,   2px); }
+  70%  { transform:scale(var(--sz,1)) translate(-2px,  -1px); }
+  80%  { transform:scale(var(--sz,1)) translate(2px,   0px); }
+  90%  { transform:scale(var(--sz,1)) translate(-1px,  -2px); }
+  100% { transform:scale(var(--sz,1)) translate(0px,   1px); }
+}
+/* Combine zoom and shake properly via a wrapper trick:
+   #slide-bg handles zoom, an inner wrapper handles shake */
+#slide-bg {
+  animation:none; /* reset above — use JS-driven class instead */
+}
+/* Class toggled by JS to trigger the zoom on visible slide */
 .slide-layer {
   position:absolute; inset:0; background-size:cover; background-position:center;
   opacity:0; transition:opacity 1.8s ease;
+  /* Scale slightly large so shake never shows edges */
+  transform:scale(1.08);
+  transform-origin:center center;
 }
-.slide-layer.visible{opacity:1;}
+.slide-layer.visible {
+  opacity:1;
+  animation:kenBurns 10s ease-in-out forwards,
+            cameraShakeSlide 7s ease-in-out infinite;
+}
+@keyframes kenBurns {
+  0%   { transform:scale(1.08) translate(0%,0%); }
+  100% { transform:scale(1.14) translate(-1%,-0.5%); }
+}
+@keyframes cameraShakeSlide {
+  0%,100%{ transform:scale(1.11) translate(0px,0px); }
+  15%    { transform:scale(1.11) translate(-3px,1px); }
+  30%    { transform:scale(1.11) translate(2px,-2px); }
+  45%    { transform:scale(1.11) translate(3px,2px); }
+  60%    { transform:scale(1.11) translate(-2px,3px); }
+  75%    { transform:scale(1.11) translate(1px,-1px); }
+}
+
 .vignette {
   position:absolute; inset:0; z-index:2; pointer-events:none;
   background:radial-gradient(ellipse at center,rgba(0,0,20,.15) 25%,rgba(0,0,0,.65) 100%);
@@ -141,12 +218,33 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 .redbar{position:absolute;top:0;bottom:0;width:5px;background:#d40020;z-index:3;}
 .redbar.l{left:0}.redbar.r{right:0}
 
-/* ── GIF overlay — centred, no blend ── */
-#gif-overlay {
+/* ── GIF overlay — centred, same zoom+shake as slides,
+   plus the same green text blur treatment ── */
+#gif-wrap {
   position:absolute; top:50%; left:50%;
   transform:translate(-50%,-50%);
   z-index:8; pointer-events:none;
+  animation:gifZoom 10s ease-in-out infinite alternate,
+            cameraShakeGif 7s ease-in-out infinite;
+  transform-origin:center center;
+}
+@keyframes gifZoom {
+  0%   { transform:translate(-50%,-50%) scale(1); }
+  100% { transform:translate(-50%,-50%) scale(1.07); }
+}
+@keyframes cameraShakeGif {
+  0%,100%{ transform:translate(-50%,-50%) scale(1.035) translate(0px,0px); }
+  15%    { transform:translate(-50%,-50%) scale(1.035) translate(-3px,1px); }
+  30%    { transform:translate(-50%,-50%) scale(1.035) translate(2px,-2px); }
+  45%    { transform:translate(-50%,-50%) scale(1.035) translate(3px,2px); }
+  60%    { transform:translate(-50%,-50%) scale(1.035) translate(-2px,3px); }
+  75%    { transform:translate(-50%,-50%) scale(1.035) translate(1px,-1px); }
+}
+#gif-overlay {
+  display:block;
   height:min(78vh,680px); width:auto;
+  /* Same glow/blur as the green marquee text */
+  filter:blur(.5px) drop-shadow(0 0 18px rgba(0,255,68,.18));
 }
 
 /* ── Right vertical marquee — FIXED
@@ -311,6 +409,41 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
   color:#fff; letter-spacing:.15em;
   text-shadow:1px 1px 0 #d40020;
 }
+
+/* ── Featured folder — special treatment ── */
+.folder-section.featured {
+  margin-bottom:3rem;
+  padding:1.2rem 1.2rem .8rem;
+  border:1px solid rgba(0,255,68,.25);
+  border-radius:2px;
+  background:rgba(0,255,68,.03);
+  position:relative;
+}
+.folder-section.featured::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,#00ff44,transparent);
+}
+.folder-section.featured .folder-header {
+  border-bottom-color:rgba(0,255,68,.3);
+}
+.folder-section.featured .folder-header::before {
+  content:'★'; color:#00ff44;
+}
+.folder-section.featured .folder-name {
+  color:#00ff44;
+  font-size:1.1rem;
+  text-shadow:0 0 14px #00ff44, 1px 1px 0 rgba(0,0,0,.5);
+}
+/* "FEATURED" badge next to folder name */
+.featured-badge {
+  display:inline-block;
+  font-family:'Share Tech Mono',monospace; font-size:.45rem;
+  letter-spacing:.25em; color:#000; background:#00ff44;
+  padding:2px 6px; margin-left:.6rem;
+  vertical-align:middle; font-weight:700;
+  text-transform:uppercase;
+}
 /* Parse the NAME.LOCATION.DATE.FILMTYPE pattern */
 .folder-meta {
   display:flex; gap:1.2rem; margin-top:.4rem; flex-wrap:wrap;
@@ -457,8 +590,10 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
     </div>
   </nav>
 
-  <!-- GIF centred -->
-  <img id="gif-overlay" src="GLITCH_BRAINROT2.gif" alt="" aria-hidden="true">
+  <!-- GIF centred, inside zoom+shake wrapper -->
+  <div id="gif-wrap">
+    <img id="gif-overlay" src="GLITCH_BRAINROT2.gif" alt="" aria-hidden="true">
+  </div>
 
   <!-- Right vertical scrolling marquee — fixed approach using translateY -->
   <div id="marquee-right">
@@ -610,15 +745,20 @@ async function loadManifests() {
   flatPhotos   = [];
 
   if (photoData) {
-    // Handle both old flat-array format and new folder-object format
     if (Array.isArray(photoData)) {
-      // Legacy: flat array → put everything in _root
       const entries = photoData.map(n => ({ name:n, url:'photos/'+encodeURIComponent(n), folder:'_root' }));
       photoFolders['_root'] = entries;
       flatPhotos = entries;
     } else {
-      // New: object of { folder: [filenames] }
-      Object.keys(photoData).sort().forEach(folder => {
+      // Sort keys: featured first, _root last, rest alphabetical
+      const sortedKeys = Object.keys(photoData).sort((a,b)=>{
+        if (a.toLowerCase()==='featured') return -1;
+        if (b.toLowerCase()==='featured') return 1;
+        if (a==='_root') return 1;
+        if (b==='_root') return -1;
+        return a.localeCompare(b);
+      });
+      sortedKeys.forEach(folder => {
         const entries = photoData[folder].map(n => ({
           name: n,
           url:  'photos/' + (folder === '_root' ? '' : encodeURIComponent(folder)+'/') + encodeURIComponent(n),
@@ -913,7 +1053,9 @@ function syncHomeUI(){
 }
 
 /* ═══════════════════════════════════════════════════
-   ARCHIVE — renders folder sections with metadata
+   ARCHIVE — renders folder sections with metadata.
+   "featured" folder always comes first and gets
+   special green highlighted treatment.
 ═══════════════════════════════════════════════════ */
 function renderArchive(){
   const scroll = document.getElementById('archive-scroll');
@@ -921,38 +1063,48 @@ function renderArchive(){
   document.getElementById('archive-count').textContent=
     `[ ${flatPhotos.length} FILE${flatPhotos.length!==1?'S':''} ]`;
 
-  // Remove old folder sections (keep empty div)
+  // Remove old folder sections
   scroll.querySelectorAll('.folder-section').forEach(el=>el.remove());
 
   if(flatPhotos.length===0){ empty.style.display='flex'; return; }
   empty.style.display='none';
 
-  Object.keys(photoFolders).sort().forEach(folderKey => {
-    const photos  = photoFolders[folderKey];
-    const meta    = parseFolderName(folderKey);
-    const section = document.createElement('div');
-    section.className = 'folder-section';
+  // Sort keys: featured always first, then alphabetical, _root last
+  const keys = Object.keys(photoFolders).sort((a,b)=>{
+    if (a.toLowerCase()==='featured') return -1;
+    if (b.toLowerCase()==='featured') return 1;
+    if (a==='_root') return 1;
+    if (b==='_root') return -1;
+    return a.localeCompare(b);
+  });
 
-    // Build metadata pills
+  keys.forEach(folderKey => {
+    const photos   = photoFolders[folderKey];
+    const meta     = parseFolderName(folderKey);
+    const isFeatured = folderKey.toLowerCase() === 'featured';
+    const section  = document.createElement('div');
+    section.className = 'folder-section' + (isFeatured ? ' featured' : '');
+
+    // Metadata pills
     const metaParts = [];
     if (meta.location) metaParts.push(`<div class="folder-meta-item"><span class="meta-label">LOCATION</span><span class="meta-value">${meta.location}</span></div>`);
     if (meta.date)     metaParts.push(`<div class="folder-meta-item"><span class="meta-label">DATE</span><span class="meta-value">${meta.date}</span></div>`);
     if (meta.filmType) metaParts.push(`<div class="folder-meta-item"><span class="meta-label">FILM</span><span class="meta-value">${meta.filmType}</span></div>`);
     metaParts.push(`<div class="folder-meta-item"><span class="meta-label">FILES</span><span class="meta-value">${photos.length}</span></div>`);
 
+    const badge = isFeatured ? `<span class="featured-badge">Featured</span>` : '';
+
     section.innerHTML = `
       <div class="folder-header">
-        <span class="folder-name">${meta.name}</span>
+        <span class="folder-name">${meta.name}${badge}</span>
         <div class="folder-meta">${metaParts.join('')}</div>
       </div>
-      <div class="photo-grid" id="grid-${folderKey}"></div>
+      <div class="photo-grid" id="grid-${CSS.escape(folderKey)}"></div>
     `;
     scroll.appendChild(section);
 
-    // Populate grid
     const grid = section.querySelector('.photo-grid');
     photos.forEach(p => {
-      // Find global index in flatPhotos for lightbox
       const globalIdx = flatPhotos.indexOf(p);
       const card = document.createElement('div');
       card.className='grid-card';
