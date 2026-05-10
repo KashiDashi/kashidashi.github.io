@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>★ FILM FRAGMENTS ★</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+
+/* ══════════════════════════════════════════
+   PAGE SYSTEM
+══════════════════════════════════════════ */
+.page { position: fixed; inset: 0; display: none; flex-direction: column; }
+.page.active { display: flex; }
+
+/* ══════════════════════════════════════════
+   CRT OVERLAY — always on top, never blocks clicks
+══════════════════════════════════════════ */
+#crt {
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.13) 0px, rgba(0,0,0,0.13) 1px,
+    transparent 1px, transparent 3px
+  );
+}
+#crt::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.62) 100%);
+  animation: flicker 8s linear infinite;
+}
+@keyframes flicker {
+  0%,92%,94%,97%,100% { opacity:1; }
+  93%  { opacity:.86; } 95% { opacity:.93; } 98% { opacity:.88; }
+}
+
+/* ══════════════════════════════════════════
+   PAGE 1 · PS2 STARTUP
+══════════════════════════════════════════ */
+#ps2-page { background:#000; align-items:center; justify-content:center; overflow:hidden; }
+.mist {
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 40% at 50% 82%, rgba(30,55,180,.22) 0%, transparent 70%);
+  animation:mistPulse 4s ease-in-out infinite alternate;
+}
+@keyframes mistPulse { from{opacity:.5} to{opacity:1} }
+
+#towers-wrap { position:relative; width:520px; height:340px; }
+
+.tower {
+  position:absolute; bottom:0; width:3px;
+  transform:scaleY(0); transform-origin:bottom;
+  border-radius:2px 2px 0 0; opacity:0;
+  animation:towerRise .15s ease-out forwards;
+}
+@keyframes towerRise {
+  0%   { transform:scaleY(0); opacity:0; }
+  60%  { opacity:1; }
+  100% { transform:scaleY(1); opacity:1; }
+}
+
+.orb {
+  position:absolute; border-radius:50%; opacity:0;
+  animation:orbFloat 3s ease-in-out infinite alternate, orbFadeIn .5s ease forwards;
+}
+@keyframes orbFadeIn { to{opacity:.8} }
+@keyframes orbFloat {
+  from { transform:translateY(0) scale(1); }
+  to   { transform:translateY(-20px) scale(1.12); }
+}
+
+#ps2-logo {
+  font-family:'Orbitron',monospace; font-size:2.6rem; font-weight:900;
+  letter-spacing:.3em; color:#fff;
+  text-shadow:0 0 20px #4488ff, 0 0 50px #2244aa;
+  opacity:0; margin-top:2rem; position:relative; z-index:2;
+  transition:opacity 1.5s ease;
+}
+#ps2-sub {
+  font-family:'Share Tech Mono',monospace; font-size:.75rem; color:#99bbff;
+  letter-spacing:.4em; opacity:0; margin-top:.4rem;
+  position:relative; z-index:2; transition:opacity 1s ease;
+}
+
+/* ══════════════════════════════════════════
+   PAGE 2 · KONAMI GATE
+══════════════════════════════════════════ */
+#konami-page {
+  background:#000;
+  align-items:center; justify-content:center;
+  flex-direction:column; gap:1.8rem;
+}
+
+.konami-title {
+  font-family:'Orbitron',monospace; font-size:.95rem;
+  letter-spacing:.4em; color:#4488ff; text-align:center;
+  animation:blink 2s ease infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+.konami-sequence { display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; max-width:440px; }
+.k-step {
+  width:46px; height:46px; border:1px solid #224488; border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Share Tech Mono',monospace; font-size:1rem; color:#334466;
+  transition:all .15s;
+}
+.k-step.done  { border-color:#4488ff; color:#4488ff; background:rgba(0,100,255,.1); box-shadow:0 0 12px rgba(68,136,255,.4); }
+.k-step.active{ border-color:#fff; color:#fff; background:rgba(255,255,255,.06); animation:kPulse .3s ease; }
+@keyframes kPulse { 0%{transform:scale(1)} 50%{transform:scale(1.18)} 100%{transform:scale(1)} }
+
+.dpad { display:grid; grid-template-columns:repeat(3,56px); gap:8px; }
+.k-btn {
+  width:56px; height:56px; background:rgba(0,10,30,.8);
+  border:1px solid #223355; border-radius:8px;
+  color:#7799cc; font-family:'Share Tech Mono',monospace; font-size:1.1rem;
+  cursor:pointer; transition:all .1s; user-select:none;
+}
+.k-btn:hover  { background:rgba(0,60,150,.3); border-color:#4488ff; color:#aaddff; }
+.k-btn:active { transform:scale(.91); }
+.k-btn.spacer { visibility:hidden; cursor:default; pointer-events:none; }
+
+.konami-error {
+  font-family:'Share Tech Mono',monospace; font-size:.62rem;
+  color:#cc2233; letter-spacing:.2em; min-height:1.2rem; text-align:center;
+}
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+.shake { animation:shake .35s ease; }
+.konami-hint { font-family:'Share Tech Mono',monospace; font-size:.58rem; color:#223344; letter-spacing:.25em; text-align:center; }
+
+/* ══════════════════════════════════════════
+   SHARED NAVBAR
+══════════════════════════════════════════ */
+.navbar {
+  position:absolute; top:0; left:0; right:0; height:50px; z-index:20;
+  display:flex; align-items:center; justify-content:space-between; padding:0 2rem;
+  background:linear-gradient(180deg, rgba(0,0,10,.92) 0%, transparent 100%);
+  border-bottom:1px solid rgba(68,136,255,.2);
+}
+.nav-logo {
+  font-family:'Orbitron',monospace; font-weight:900; font-size:1rem;
+  letter-spacing:.3em; color:#fff; text-shadow:0 0 15px #4488ff;
+}
+.nav-logo span { color:#d40020; }
+.nav-links { display:flex; gap:2rem; }
+.nav-link {
+  background:none; border:none; font-family:'Share Tech Mono',monospace;
+  font-size:.62rem; letter-spacing:.3em; color:#667788;
+  cursor:pointer; padding:.3rem .5rem; text-transform:uppercase; transition:color .2s;
+}
+.nav-link:hover { color:#fff; }
+.nav-link.active { color:#00eeff; border-bottom:1px solid #00eeff; }
+
+/* ══════════════════════════════════════════
+   PAGE 3 · HOME — SLIDESHOW
+══════════════════════════════════════════ */
+#home-page { background:#000; overflow:hidden; }
+
+/* Slideshow background layers */
+#slide-bg { position:absolute; inset:0; background:#000; }
+.slide-layer {
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  opacity:0; transition:opacity 1.8s ease;
+}
+.slide-layer.visible { opacity:1; }
+
+/* Dark vignette */
+.vignette {
+  position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(0,0,20,.15) 25%, rgba(0,0,0,.68) 100%);
+}
+
+/* Red persona bars */
+.redbar { position:absolute; top:0; bottom:0; width:5px; background:#d40020; z-index:3; }
+.redbar.l{left:0} .redbar.r{right:0}
+
+/* ──────────────────────────────────────────
+   GIF OVERLAY — centred, transparent bg
+   The white background of the GIF is removed
+   via mix-blend-mode:multiply so it blends
+   naturally with the dark slideshow beneath
+────────────────────────────────────────── */
+#gif-overlay {
+  position:absolute;
+  /* vertically centred in the visible area between navbar+marquee
+     (top:50px navbar + 28px inner marquee = 78px) and the bottom
+     marquee (80px tall). Centre of remaining space: */
+  top:50%; left:50%;
+  transform:translate(-50%, -50%);
+  z-index:8; pointer-events:none;
+  /* Size: tall enough to be prominent but not covering everything */
+  height:min(58vh, 480px);
+  width:auto;
+  /* Blend mode removes the white background without needing
+     image editing — multiply makes white transparent on dark bg */
+  mix-blend-mode:multiply;
+  /* Add a subtle drop shadow for depth */
+  filter:drop-shadow(0 0 20px rgba(0,255,68,.25));
+}
+
+/* ──────────────────────────────────────────
+   GREEN "FILM FRAGMENTS" TEXT
+   Top-left, same green + blur style as
+   the previous "Sea of Fragments" title
+────────────────────────────────────────── */
+#green-title {
+  position:absolute;
+  top:86px;   /* below navbar (50px) + top marquee (28px) + gap */
+  left:2.5rem;
+  z-index:9; pointer-events:none;
+  font-family:'Orbitron',monospace;
+  font-size:clamp(1.8rem, 4vw, 3.2rem);
+  font-weight:900;
+  color:#00ff44;
+  text-shadow:
+    0 0 18px #00ff44,
+    0 0 40px rgba(0,255,68,.55),
+    2px 2px 0 rgba(0,0,0,.5);
+  filter:blur(.6px);
+  letter-spacing:.06em;
+  line-height:1.1;
+}
+
+/* ──────────────────────────────────────────
+   TOP HORIZONTAL MARQUEE (below navbar)
+   Same lyrics from the reference image
+────────────────────────────────────────── */
+#marquee-top {
+  position:absolute; top:50px; left:0; right:0; z-index:10;
+  overflow:hidden; height:28px;
+  background:rgba(0,0,0,0.52);
+  border-bottom:1px solid rgba(212,0,32,.4);
+  display:flex; align-items:center;
+}
+#marquee-top-inner {
+  display:inline-flex; gap:4rem; white-space:nowrap;
+  animation:scrollLeft 30s linear infinite;
+  font-family:'Share Tech Mono',monospace; font-size:.6rem;
+  letter-spacing:.25em; color:rgba(210,210,225,.75);
+}
+
+/* ──────────────────────────────────────────
+   BOTTOM HORIZONTAL MARQUEE
+   "Sea of Fragments" lyrics, Orbitron font,
+   large size, transparent background,
+   sitting ON the slideshow at the bottom
+   (same position the green text used to be)
+────────────────────────────────────────── */
+#marquee-bottom {
+  position:absolute; bottom:0; left:0; right:0; z-index:10;
+  overflow:hidden;
+  /* enough height for the large Orbitron text + padding */
+  height:90px;
+  /* fully transparent — sits on top of the photo */
+  background:transparent;
+  display:flex; align-items:center;
+}
+#marquee-bottom-inner {
+  display:inline-flex; gap:6rem; white-space:nowrap;
+  animation:scrollLeft 22s linear infinite;
+  font-family:'Orbitron',monospace;
+  font-size:clamp(2rem, 5vw, 3.8rem);
+  font-weight:900;
+  color:#00ff44;
+  text-shadow:
+    0 0 18px #00ff44,
+    0 0 40px rgba(0,255,68,.5),
+    2px 2px 0 rgba(0,0,0,.55);
+  filter:blur(.5px);
+  letter-spacing:.06em;
+}
+
+@keyframes scrollLeft {
+  from { transform:translateX(100vw); }
+  to   { transform:translateX(-100%); }
+}
+
+/* ──────────────────────────────────────────
+   RIGHT-SIDE VERTICAL MARQUEE — "Lambdadelta"
+   Scrolls upward along the right edge,
+   same position as the old vertical text
+────────────────────────────────────────── */
+#marquee-right {
+  position:absolute; right:14px; top:80px; bottom:95px;
+  z-index:10; pointer-events:none;
+  overflow:hidden;
+  width:clamp(1.4rem, 3vw, 2.4rem);
+  display:flex; justify-content:center;
+}
+#marquee-right-inner {
+  display:flex; flex-direction:column; gap:3rem; white-space:nowrap;
+  animation:scrollUp 14s linear infinite;
+  font-family:'Orbitron',monospace;
+  font-size:clamp(1.4rem, 3vw, 2.4rem);
+  font-weight:900;
+  color:#00ff44;
+  text-shadow:0 0 16px #00ff44, 0 0 35px rgba(0,255,68,.45);
+  filter:blur(.5px);
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  transform:rotate(180deg);
+  letter-spacing:.08em;
+}
+@keyframes scrollUp {
+  from { transform:rotate(180deg) translateY(0); }
+  to   { transform:rotate(180deg) translateY(-50%); }
+}
+
+/* ── Slide counter (bottom-right, above bottom marquee) ── */
+#slide-hud {
+  position:absolute; bottom:94px; right:50px; z-index:11;
+  font-family:'Share Tech Mono',monospace; font-size:.55rem;
+  color:rgba(0,238,255,.5); letter-spacing:.3em; display:none;
+}
+#slide-dots {
+  position:absolute; bottom:94px; left:50%; transform:translateX(-50%);
+  z-index:11; display:none; gap:6px;
+}
+.dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.2); transition:background .3s,transform .3s; }
+.dot.active { background:#d40020; transform:scale(1.45); box-shadow:0 0 7px #d40020; }
+
+/* ── Music indicator ── */
+#music-indicator {
+  position:absolute; top:58px; left:1.5rem; z-index:15;
+  font-family:'Share Tech Mono',monospace; font-size:.5rem;
+  color:rgba(0,238,255,.5); letter-spacing:.25em;
+  display:none;
+}
+#music-indicator.visible { display:block; }
+
+/* ══════════════════════════════════════════
+   PAGE 4 · ARCHIVE
+══════════════════════════════════════════ */
+#archive-page { background:#080810; overflow:hidden; }
+.archive-wrap { display:flex; flex-direction:column; height:100%; }
+.archive-header {
+  flex-shrink:0; height:50px; padding:0 2rem;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(0,5,20,.96); border-bottom:2px solid #d40020; position:relative;
+}
+.archive-header::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:2px; background:linear-gradient(90deg,transparent,#00eeff,transparent);
+}
+.archive-title {
+  font-family:'Orbitron',monospace; font-weight:900; font-size:1rem;
+  color:#fff; letter-spacing:.2em; text-shadow:2px 2px 0 #d40020;
+}
+#archive-count { font-family:'Share Tech Mono',monospace; font-size:.55rem; color:#334466; letter-spacing:.3em; margin-left:1rem; }
+.archive-scroll { flex:1; overflow-y:auto; padding:1.5rem; scrollbar-width:thin; scrollbar-color:#d40020 transparent; }
+.archive-scroll::-webkit-scrollbar { width:3px; }
+.archive-scroll::-webkit-scrollbar-thumb { background:#d40020; }
+
+/* Masonry grid */
+.photo-grid { columns:3; column-gap:12px; }
+@media(max-width:700px){.photo-grid{columns:2}}
+@media(max-width:420px){.photo-grid{columns:1}}
+.grid-card { break-inside:avoid; margin-bottom:12px; position:relative; cursor:pointer; overflow:hidden; }
+.grid-card img { width:100%; display:block; transition:transform .3s,filter .3s; filter:saturate(1.1) contrast(1.05); }
+.grid-card:hover img { transform:scale(1.05); filter:saturate(1.45) brightness(1.1); }
+.grid-card::before { content:''; position:absolute; top:0; right:0; width:18px; height:18px; background:#080810; clip-path:polygon(0 0,100% 0,100% 100%); z-index:2; }
+.grid-overlay { position:absolute; inset:0; background:rgba(0,0,30,.72); opacity:0; transition:opacity .2s; z-index:3; display:flex; align-items:flex-end; padding:.6rem; }
+.grid-card:hover .grid-overlay { opacity:1; }
+.grid-overlay span { font-family:'Share Tech Mono',monospace; font-size:.52rem; color:#fff; letter-spacing:.15em; }
+.grid-num { position:absolute; top:8px; left:8px; z-index:4; font-family:'Share Tech Mono',monospace; font-size:.48rem; color:#00eeff; background:rgba(0,0,0,.65); border:1px solid rgba(0,80,200,.45); border-bottom:2px solid #d40020; padding:1px 5px; letter-spacing:.18em; }
+#archive-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:300px; gap:1rem; font-family:'Share Tech Mono',monospace; color:#334466; letter-spacing:.3em; text-align:center; font-size:.7rem; }
+
+/* ══════════════════════════════════════════
+   LIGHTBOX · IE6 REPLICA
+══════════════════════════════════════════ */
+#lightbox { position:fixed; inset:0; z-index:5000; display:none; align-items:center; justify-content:center; background:rgba(0,0,10,.9); }
+#lightbox.open { display:flex; }
+.ie-win { width:min(86vw,880px); background:#d4d0c8; border:2px solid; border-color:#fff #404040 #404040 #fff; box-shadow:2px 2px 0 rgba(0,0,0,.5),8px 8px 24px rgba(0,0,0,.75); font-family:Tahoma,sans-serif; }
+.ie-titlebar { background:linear-gradient(180deg,#0a246a 0%,#3a6ea5 100%); padding:3px 6px; height:26px; display:flex; align-items:center; justify-content:space-between; user-select:none; }
+.ie-title-left { color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; gap:5px; }
+.ie-icon { width:16px; height:16px; background:linear-gradient(135deg,#4488ff,#0044cc); border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:9px; }
+.ie-winctrls { display:flex; gap:2px; }
+.ie-wbtn { width:17px; height:15px; cursor:pointer; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#e8e8e8,#c0c0c0); border:1px solid #808080; box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #808080; }
+.ie-wbtn:active { box-shadow:inset -1px -1px 0 #fff,inset 1px 1px 0 #808080; }
+.ie-wbtn.x { color:#cc0000; }
+.ie-menurow { background:#d4d0c8; border-bottom:1px solid #808080; padding:2px 4px; display:flex; }
+.ie-mi { font-size:11px; padding:2px 8px; cursor:default; }
+.ie-mi:hover { background:#0a246a; color:#fff; }
+.ie-toolbar { background:#d4d0c8; border-bottom:1px solid #808080; padding:3px 4px; display:flex; align-items:center; gap:4px; }
+.ie-tb { background:linear-gradient(180deg,#f0f0f0,#d0d0d0); border:1px solid #808080; box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #808080; font-size:10px; padding:2px 8px; font-family:Tahoma,sans-serif; cursor:default; }
+.ie-addr { flex:1; background:#fff; border:1px solid #808080; box-shadow:inset 1px 1px 2px rgba(0,0,0,.2); padding:1px 6px; height:22px; display:flex; align-items:center; gap:4px; font-size:11px; font-family:Tahoma,sans-serif; overflow:hidden; }
+.ie-progress { height:4px; background:#d4d0c8; overflow:hidden; }
+.ie-progress-fill { height:100%; background:#0a246a; width:0; transition:width .75s ease; }
+.ie-body { background:#000; border:2px inset #808080; margin:3px; min-height:180px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.ie-body img { display:block; width:100%; max-height:52vh; object-fit:contain; }
+.ie-fileinfo { background:#f0f0f0; border-top:1px solid #ccc; padding:3px 8px; font-size:10px; color:#444; display:flex; justify-content:space-between; }
+.ie-nav { display:flex; justify-content:space-between; align-items:center; padding:4px 8px; background:#d4d0c8; border-top:1px solid #808080; }
+.ie-navbtn { background:linear-gradient(180deg,#f0f0f0,#d0d0d0); border:1px solid #808080; box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #808080; font-size:10px; padding:2px 14px; cursor:pointer; font-family:Tahoma,sans-serif; }
+.ie-navbtn:hover { background:linear-gradient(180deg,#fff,#e0e0e0); }
+.ie-statusbar { background:#d4d0c8; border-top:1px solid #808080; padding:2px 6px; font-size:10px; display:flex; justify-content:space-between; }
+.ie-sp { border:1px inset #808080; padding:0 4px; }
+
+/* Loading screen */
+#loading-screen {
+  position:fixed; inset:0; background:#000; z-index:8000;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;
+  font-family:'Share Tech Mono',monospace; color:#334466; letter-spacing:.3em;
+}
+#loading-screen.gone { display:none; }
+.spinner { width:36px; height:36px; border:2px solid #112244; border-top-color:#4488ff; border-radius:50%; animation:spin .8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+</style>
+</head>
+<body>
+
+<!-- CRT overlay -->
+<div id="crt"></div>
+
+<!-- Loading screen while manifests fetch -->
+<div id="loading-screen">
+  <div class="spinner"></div>
+  <div>LOADING ARCHIVE…</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 · PS2 STARTUP
+══════════════════════════════════════ -->
+<div id="ps2-page" class="page">
+  <div class="mist"></div>
+  <div id="towers-wrap"></div>
+  <div id="ps2-logo">FILM FRAGMENTS</div>
+  <div id="ps2-sub">フォトギャラリー / PHOTO ARCHIVE SYSTEM</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 · KONAMI GATE
+     ↑ ↑ ↓ ↓ ← → ← → B A
+══════════════════════════════════════ -->
+<div id="konami-page" class="page">
+  <div class="konami-title">▷ ENTER ACCESS CODE // アクセスコード ◁</div>
+  <div class="konami-sequence" id="konami-seq"></div>
+  <div style="display:flex;gap:2rem;align-items:center;">
+    <div class="dpad">
+      <button class="k-btn spacer"></button>
+      <button class="k-btn" data-key="ArrowUp">▲</button>
+      <button class="k-btn spacer"></button>
+      <button class="k-btn" data-key="ArrowLeft">◀</button>
+      <button class="k-btn spacer"></button>
+      <button class="k-btn" data-key="ArrowRight">▶</button>
+      <button class="k-btn spacer"></button>
+      <button class="k-btn" data-key="ArrowDown">▼</button>
+      <button class="k-btn spacer"></button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="k-btn" data-key="b">B</button>
+      <button class="k-btn" data-key="a">A</button>
+    </div>
+  </div>
+  <div class="konami-error" id="konami-error">&nbsp;</div>
+  <div class="konami-hint">↑ ↑ ↓ ↓ ← → ← → B A &nbsp;·&nbsp; KEYBOARD OR BUTTONS</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 · HOME — SLIDESHOW
+══════════════════════════════════════ -->
+<div id="home-page" class="page">
+
+  <!-- Slideshow background (layers injected by JS) -->
+  <div id="slide-bg"></div>
+  <div class="vignette"></div>
+  <div class="redbar l"></div>
+  <div class="redbar r"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">FILM<span>★</span>FRAGMENTS</div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="goHome()">HOME</button>
+      <button class="nav-link" onclick="goArchive()">ARCHIVE</button>
+    </div>
+  </nav>
+
+  <!-- Top scrolling marquee (small, below navbar) -->
+  <div id="marquee-top">
+    <div id="marquee-top-inner">
+      (Warning? Don't Worry) &nbsp;//&nbsp; I'm being swept away &nbsp;//&nbsp;
+      I can't break free from this loop &nbsp;//&nbsp;
+      Even if I come to my senses &nbsp;//&nbsp;
+      (Warning? Don't Worry) &nbsp;//&nbsp; I'm being swept away &nbsp;//&nbsp;
+      I can't break free from this loop &nbsp;//&nbsp;
+      Even if I come to my senses &nbsp;//&nbsp;
+      ★ フォトギャラリー ★ 写真コレクション ★ PERSONAL ARCHIVE ★ &nbsp;//&nbsp;
+      (Warning? Don't Worry) &nbsp;//&nbsp; I'm being swept away &nbsp;//&nbsp;
+      I can't break free from this loop &nbsp;//&nbsp;
+      Even if I come to my senses &nbsp;//&nbsp;
+    </div>
+  </div>
+
+  <!-- "FILM FRAGMENTS" green blurred title — top left -->
+  <div id="green-title">FILM FRAGMENTS</div>
+
+  <!-- GIF overlay — centred on screen -->
+  <!-- mix-blend-mode:multiply removes the white background -->
+  <img
+    id="gif-overlay"
+    src="GLITCH_BRAINROT2.gif"
+    alt=""
+    aria-hidden="true"
+  >
+
+  <!-- Right-side vertical scrolling marquee "Lambdadelta" -->
+  <div id="marquee-right">
+    <div id="marquee-right-inner">
+      <!-- Repeated so the scroll loops seamlessly -->
+      Lambdadelta &nbsp; Lambdadelta &nbsp; Lambdadelta &nbsp;
+      Lambdadelta &nbsp; Lambdadelta &nbsp; Lambdadelta &nbsp;
+      Lambdadelta &nbsp; Lambdadelta &nbsp; Lambdadelta &nbsp;
+    </div>
+  </div>
+
+  <!-- Slide counter + dots -->
+  <div id="slide-hud">01 / 01</div>
+  <div id="slide-dots"></div>
+
+  <!-- Now-playing indicator (small, top-left) -->
+  <div id="music-indicator">♪ NOW PLAYING</div>
+
+  <!-- Bottom horizontal marquee — large Orbitron green text, transparent -->
+  <div id="marquee-bottom">
+    <div id="marquee-bottom-inner">
+      Sea of Fragments &nbsp;&nbsp;
+      Sea of Fragments &nbsp;&nbsp;
+      Sea of Fragments &nbsp;&nbsp;
+      Sea of Fragments &nbsp;&nbsp;
+      Sea of Fragments &nbsp;&nbsp;
+      Sea of Fragments &nbsp;&nbsp;
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 · ARCHIVE
+══════════════════════════════════════ -->
+<div id="archive-page" class="page">
+  <div class="archive-wrap">
+    <header class="archive-header">
+      <div style="display:flex;align-items:baseline;">
+        <div class="archive-title">ARCHIVE</div>
+        <div id="archive-count">[ 0 FILES ]</div>
+      </div>
+      <button class="nav-link" onclick="goHome()">◀ HOME</button>
+    </header>
+    <div class="archive-scroll">
+      <div id="archive-empty">// ARCHIVE EMPTY — ADD IMAGES TO /photos FOLDER //</div>
+      <div class="photo-grid" id="photo-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     LIGHTBOX · IE6 WINDOW
+══════════════════════════════════════ -->
+<div id="lightbox">
+  <div class="ie-win">
+    <div class="ie-titlebar">
+      <div class="ie-title-left">
+        <div class="ie-icon">🌐</div>
+        <span id="lb-title">Photo - Microsoft Internet Explorer</span>
+      </div>
+      <div class="ie-winctrls">
+        <div class="ie-wbtn">_</div><div class="ie-wbtn">□</div>
+        <div class="ie-wbtn x" id="lb-close">✕</div>
+      </div>
+    </div>
+    <div class="ie-menurow">
+      <div class="ie-mi">File</div><div class="ie-mi">Edit</div>
+      <div class="ie-mi">View</div><div class="ie-mi">Favorites</div>
+      <div class="ie-mi">Tools</div><div class="ie-mi">Help</div>
+    </div>
+    <div class="ie-toolbar">
+      <div class="ie-tb">◀ Back</div><div class="ie-tb">▶ Fwd</div>
+      <div class="ie-tb">✕ Stop</div><div class="ie-tb">↻ Refresh</div><div class="ie-tb">🏠</div>
+      <div class="ie-addr">
+        <div style="width:14px;height:14px;background:linear-gradient(135deg,#4488ff,#0044cc);border-radius:1px;flex-shrink:0;"></div>
+        <span id="lb-url" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">C:\Photos\photo.jpg</span>
+      </div>
+      <div class="ie-tb">Go</div>
+    </div>
+    <div class="ie-progress"><div class="ie-progress-fill" id="lb-fill"></div></div>
+    <div class="ie-body"><img id="lb-img" src="" alt=""></div>
+    <div class="ie-fileinfo"><span id="lb-info">photo.jpg</span><span id="lb-size">—</span></div>
+    <div class="ie-nav">
+      <button class="ie-navbtn" id="lb-prev">◀ Previous</button>
+      <span id="lb-counter" style="font-size:10px;font-family:Tahoma,sans-serif;">1 / 1</span>
+      <button class="ie-navbtn" id="lb-next">Next ▶</button>
+    </div>
+    <div class="ie-statusbar">
+      <div class="ie-sp" id="lb-status">Done</div>
+      <div style="display:flex;gap:2px;">
+        <div class="ie-sp">🔒 Local intranet</div><div class="ie-sp">100%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden audio element for music playback -->
+<audio id="audio-player" loop></audio>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+let photos        = [];   // { name, url }
+let tracks        = [];   // { name, url }
+let currentSlide  = 0;
+let slideTimer    = null;
+let lbIdx         = 0;
+let currentTrack  = 0;
+const audioEl     = document.getElementById('audio-player');
+
+/* ═══════════════════════════════════════════════════════
+   LOAD MANIFESTS
+   Both /photos/manifest.json and /music/manifest.json
+   are auto-generated by GitHub Actions when you push
+   files into those folders.
+═══════════════════════════════════════════════════════ */
+async function loadManifests() {
+  // Load photo manifest
+  try {
+    const r = await fetch('photos/manifest.json?nc=' + Date.now());
+    if (r.ok) {
+      const names = await r.json();
+      photos = names.map(n => ({ name: n, url: 'photos/' + encodeURIComponent(n) }));
+    }
+  } catch(e) { console.warn('photos/manifest.json not loaded:', e.message); }
+
+  // Load music manifest
+  try {
+    const r = await fetch('music/manifest.json?nc=' + Date.now());
+    if (r.ok) {
+      const names = await r.json();
+      tracks = names.map(n => ({ name: n, url: 'music/' + encodeURIComponent(n) }));
+    }
+  } catch(e) { console.warn('music/manifest.json not loaded:', e.message); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MUSIC PLAYER
+   Loads tracks from /music folder via manifest.
+   Shuffles on entry, auto-advances to next track,
+   loops the playlist indefinitely.
+═══════════════════════════════════════════════════════ */
+function shuffleArray(arr) {
+  // Fisher-Yates shuffle
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function startMusic() {
+  if (tracks.length === 0) return;
+
+  // Shuffle playlist so it doesn't always start on the same track
+  shuffleArray(tracks);
+  currentTrack = 0;
+  playTrack(currentTrack);
+
+  // When a track ends, advance to the next one
+  audioEl.addEventListener('ended', () => {
+    currentTrack = (currentTrack + 1) % tracks.length;
+    playTrack(currentTrack);
+  });
+}
+
+function playTrack(idx) {
+  const track = tracks[idx];
+  if (!track) return;
+  audioEl.src = track.url;
+  audioEl.volume = 0.7;
+
+  const playPromise = audioEl.play();
+  if (playPromise) {
+    playPromise.catch(() => {
+      // Autoplay blocked — wait for first user interaction
+      const resume = () => {
+        audioEl.play().catch(() => {});
+        document.removeEventListener('click', resume);
+        document.removeEventListener('keydown', resume);
+      };
+      document.addEventListener('click', resume, { once: true });
+      document.addEventListener('keydown', resume, { once: true });
+    });
+  }
+
+  // Show track name briefly
+  const indicator = document.getElementById('music-indicator');
+  if (indicator) {
+    const cleanName = track.name.replace(/\.[^.]+$/, '');
+    indicator.textContent = '♪ ' + cleanName;
+    indicator.classList.add('visible');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PAGE ROUTER
+═══════════════════════════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════════
+   PS2 STARTUP SOUND (Web Audio, no files needed)
+═══════════════════════════════════════════════════════ */
+let actx = null;
+function ensureActx() {
+  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  if (actx.state === 'suspended') actx.resume();
+}
+
+function playPS2Sound() {
+  try {
+    ensureActx();
+    const mg = actx.createGain(); mg.gain.value = 0.25; mg.connect(actx.destination);
+    const notes = [
+      [.20,55,.28,.45],[.20,110,.28,.35],[.55,82.5,.38,.4],[.55,165,.38,.28],
+      [1.0,110,.45,.45],[1.0,220,.45,.3],[1.55,146.8,.45,.4],[1.55,293.7,.45,.28],
+      [2.1,196,.5,.45],[2.1,392,.5,.3],[2.75,261.6,1.4,.55],[2.75,329.6,1.4,.45],
+      [2.75,392,1.4,.4],[2.75,523.3,1.4,.3],
+    ];
+    const t0 = actx.currentTime;
+    notes.forEach(([t,hz,dur,pk]) => {
+      const o=actx.createOscillator(), g=actx.createGain();
+      o.connect(g); g.connect(mg); o.type='sine'; o.frequency.value=hz;
+      o.detune.value=(Math.random()*6)-3;
+      g.gain.setValueAtTime(0,t0+t);
+      g.gain.linearRampToValueAtTime(pk,t0+t+.06);
+      g.gain.linearRampToValueAtTime(0,t0+t+dur);
+      o.start(t0+t); o.stop(t0+t+dur+.1);
+    });
+  } catch(e) {}
+}
+
+/* ═══════════════════════════════════════════════════════
+   PS2 STARTUP ANIMATION
+   Builds rising towers and floating orbs,
+   plays startup sound, then crossfades to Konami gate
+═══════════════════════════════════════════════════════ */
+function runPS2() {
+  const wrap = document.getElementById('towers-wrap');
+
+  // Build tower bars
+  for (let i = 0; i < 90; i++) {
+    const el = document.createElement('div');
+    el.className = 'tower';
+    el.style.cssText = `
+      left:${(i/90)*520-2}px;
+      height:${Math.random()*218+72}px;
+      animation-delay:${i*.032+Math.random()*.015}s;
+      background:linear-gradient(to top,#2244cc,#6699ff 50%,#fff);
+      box-shadow:0 0 6px #88aaff,0 0 16px #3366cc;
+    `;
+    wrap.appendChild(el);
+  }
+
+  // Build orbs
+  [{x:175,y:80,r:22,c:'#aaddff',d:3.1,dl:1.5},{x:310,y:110,r:16,c:'#99ccff',d:2.7,dl:2.0},
+   {x:90,y:130,r:12,c:'#ccddff',d:3.5,dl:2.4},{x:395,y:88,r:18,c:'#bbddff',d:2.9,dl:1.8},
+   {x:248,y:52,r:10,c:'#eef4ff',d:4.0,dl:2.8}].forEach(o => {
+    const el = document.createElement('div'); el.className = 'orb';
+    el.style.cssText = `
+      left:${o.x}px; top:${o.y}px; width:${o.r*2}px; height:${o.r*2}px;
+      background:radial-gradient(circle at 35% 35%,#fff 0%,${o.c} 40%,transparent 70%);
+      box-shadow:0 0 ${o.r*2}px ${o.c};
+      animation-duration:${o.d}s,.4s; animation-delay:${o.dl}s,${o.dl}s;
+    `;
+    wrap.appendChild(el);
+  });
+
+  // Play PS2 sound on first click (browser autoplay policy)
+  document.addEventListener('click', () => { ensureActx(); playPS2Sound(); }, { once: true });
+
+  // Fade in logo text at 3s
+  setTimeout(() => {
+    document.getElementById('ps2-logo').style.opacity = '1';
+    setTimeout(() => document.getElementById('ps2-sub').style.opacity = '1', 600);
+  }, 3000);
+
+  // Crossfade to Konami gate at 5.5s
+  setTimeout(() => {
+    const p = document.getElementById('ps2-page');
+    p.style.transition = 'opacity 1.2s ease'; p.style.opacity = '0';
+    setTimeout(() => { showPage('konami-page'); p.style.opacity = '1'; }, 1200);
+  }, 5500);
+}
+
+/* ═══════════════════════════════════════════════════════
+   KONAMI CODE GATE
+═══════════════════════════════════════════════════════ */
+const SEQ    = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown',
+                'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+const LABELS = ['▲','▲','▼','▼','◀','▶','◀','▶','B','A'];
+let kPos = 0;
+
+function buildKonamiUI() {
+  const el = document.getElementById('konami-seq');
+  LABELS.forEach((lbl, i) => {
+    const s = document.createElement('div');
+    s.className='k-step'; s.id='ks'+i; s.textContent=lbl; el.appendChild(s);
+  });
+}
+
+function feedKonami(key) {
+  if (key.toLowerCase() === SEQ[kPos].toLowerCase()) {
+    document.getElementById('ks'+kPos).classList.remove('active');
+    document.getElementById('ks'+kPos).classList.add('done');
+    kPos++;
+    document.getElementById('konami-error').innerHTML = '&nbsp;';
+    if (kPos >= SEQ.length) {
+      enterGallery();
+    } else {
+      const nx = document.getElementById('ks'+kPos);
+      if (nx) { nx.classList.add('active'); setTimeout(()=>nx.classList.remove('active'),350); }
+    }
+  } else {
+    kPos = 0;
+    document.querySelectorAll('.k-step').forEach(s=>s.classList.remove('done','active'));
+    const err = document.getElementById('konami-error');
+    err.textContent = '▷ WRONG SEQUENCE — やり直してください ◁';
+    err.classList.remove('shake'); void err.offsetWidth; err.classList.add('shake');
+    const f = document.getElementById('ks0');
+    if (f) { f.classList.add('active'); setTimeout(()=>f.classList.remove('active'),350); }
+  }
+}
+
+function enterGallery() {
+  const page = document.getElementById('konami-page');
+  page.style.transition = 'opacity .7s ease'; page.style.opacity = '0';
+  setTimeout(() => {
+    page.style.opacity = '1';
+    showPage('home-page');
+    syncHomeUI();
+    rebuildSlides();
+    if (photos.length > 0) startSlideshow();
+    // Start music on entry — browser may require gesture first
+    startMusic();
+  }, 700);
+}
+
+// Keyboard listener for Konami gate
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('konami-page').classList.contains('active')) return;
+  const map = {
+    ArrowUp:'ArrowUp',ArrowDown:'ArrowDown',
+    ArrowLeft:'ArrowLeft',ArrowRight:'ArrowRight',
+    b:'b',B:'b',a:'a',A:'a'
+  };
+  const k = map[e.key]; if (k) { e.preventDefault(); feedKonami(k); }
+});
+
+// On-screen button clicks
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-key]');
+  if (!btn || !document.getElementById('konami-page').classList.contains('active')) return;
+  feedKonami(btn.dataset.key);
+});
+
+/* ═══════════════════════════════════════════════════════
+   SLIDESHOW ENGINE
+═══════════════════════════════════════════════════════ */
+function rebuildSlides() {
+  const bg = document.getElementById('slide-bg');
+  bg.innerHTML = '';
+  photos.forEach((p, i) => {
+    const d = document.createElement('div');
+    d.className = 'slide-layer' + (i===0?' visible':'');
+    d.style.backgroundImage = `url(${p.url})`;
+    bg.appendChild(d);
+  });
+  rebuildDots(); updateHud();
+}
+
+function rebuildDots() {
+  const el = document.getElementById('slide-dots');
+  el.innerHTML = '';
+  const max = Math.min(photos.length, 18);
+  for (let i=0; i<max; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot'+(i===currentSlide?' active':'');
+    el.appendChild(d);
+  }
+}
+
+function showSlide(idx) {
+  document.querySelectorAll('.slide-layer').forEach((l,i)=>l.classList.toggle('visible',i===idx));
+  document.querySelectorAll('#slide-dots .dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  currentSlide=idx; updateHud();
+}
+
+function updateHud() {
+  document.getElementById('slide-hud').textContent =
+    String(currentSlide+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');
+}
+
+function startSlideshow() {
+  clearInterval(slideTimer);
+  if (photos.length===0) return;
+  showSlide(0);
+  slideTimer = setInterval(()=>showSlide((currentSlide+1)%photos.length), 4000);
+}
+
+function syncHomeUI() {
+  const has = photos.length > 0;
+  document.getElementById('slide-hud').style.display  = has ? 'block' : 'none';
+  document.getElementById('slide-dots').style.display = has ? 'flex'  : 'none';
+}
+
+/* ═══════════════════════════════════════════════════════
+   ARCHIVE RENDERER
+═══════════════════════════════════════════════════════ */
+function renderArchive() {
+  const grid  = document.getElementById('photo-grid');
+  const empty = document.getElementById('archive-empty');
+  document.getElementById('archive-count').textContent =
+    `[ ${photos.length} FILE${photos.length!==1?'S':''} ]`;
+  if (photos.length===0) { empty.style.display='flex'; grid.innerHTML=''; return; }
+  empty.style.display='none'; grid.innerHTML='';
+  photos.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'grid-card';
+    card.innerHTML = `
+      <img src="${p.url}" alt="${p.name}" loading="lazy">
+      <div class="grid-num">No.${String(i+1).padStart(3,'0')}</div>
+      <div class="grid-overlay"><span>${p.name.replace(/\.[^.]+$/,'')}</span></div>
+    `;
+    card.addEventListener('click', ()=>openLightbox(i));
+    grid.appendChild(card);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHTBOX — IE6 WINDOW
+═══════════════════════════════════════════════════════ */
+function openLightbox(idx) {
+  lbIdx=idx; renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function renderLightbox() {
+  const p = photos[lbIdx]; if (!p) return;
+  const fill = document.getElementById('lb-fill');
+  fill.style.transition='none'; fill.style.width='0';
+  setTimeout(()=>{ fill.style.transition='width .75s ease'; fill.style.width='65%'; },30);
+  setTimeout(()=>fill.style.width='100%',450);
+  setTimeout(()=>{ fill.style.transition='none'; fill.style.width='0'; },1100);
+  const img = document.getElementById('lb-img'); img.src='';
+  setTimeout(()=>img.src=p.url, 60);
+  document.getElementById('lb-title').textContent  = p.name+' - Windows Internet Explorer';
+  document.getElementById('lb-url').textContent    = 'C:\\Photos\\'+p.name;
+  document.getElementById('lb-info').textContent   = p.name;
+  document.getElementById('lb-size').textContent   = '—';
+  document.getElementById('lb-status').textContent = 'Done';
+  document.getElementById('lb-counter').textContent= (lbIdx+1)+' / '+photos.length;
+}
+
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', e=>{
+  if (e.target===document.getElementById('lightbox')) closeLightbox();
+});
+document.getElementById('lb-prev').addEventListener('click', ()=>{
+  lbIdx=(lbIdx-1+photos.length)%photos.length; renderLightbox();
+});
+document.getElementById('lb-next').addEventListener('click', ()=>{
+  lbIdx=(lbIdx+1)%photos.length; renderLightbox();
+});
+document.addEventListener('keydown', e=>{
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key==='Escape') closeLightbox();
+  if (e.key==='ArrowLeft')  { lbIdx=(lbIdx-1+photos.length)%photos.length; renderLightbox(); }
+  if (e.key==='ArrowRight') { lbIdx=(lbIdx+1)%photos.length; renderLightbox(); }
+});
+
+/* ═══════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════ */
+function goHome() {
+  showPage('home-page'); syncHomeUI();
+  if (photos.length>0) startSlideshow(); else clearInterval(slideTimer);
+}
+function goArchive() {
+  clearInterval(slideTimer); renderArchive(); showPage('archive-page');
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOT
+   1. Fetch both manifests
+   2. Hide loading screen
+   3. Run PS2 startup animation
+═══════════════════════════════════════════════════════ */
+window.addEventListener('load', async () => {
+  buildKonamiUI();
+  await loadManifests();
+  document.getElementById('loading-screen').classList.add('gone');
+  showPage('ps2-page');
+  setTimeout(runPS2, 200);
+});
+</script>
+</body>
+</html>
