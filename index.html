@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FILM FRAGMENTS ★</title>
+<title>★ FILM FRAGMENTS ★</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 
@@ -14,16 +14,14 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 .page { position:fixed; inset:0; display:none; flex-direction:column; }
 .page.active { display:flex; }
 
-/* ══ CRT OVERLAY ══
-   .crt-off class disables it (toggled in archive) */
+/* ══ CRT OVERLAY ══ */
 #crt {
   position:fixed; inset:0; z-index:9999; pointer-events:none;
   background:repeating-linear-gradient(
-    0deg,
-    rgba(0,0,0,0.13) 0px, rgba(0,0,0,0.13) 1px,
+    0deg, rgba(0,0,0,0.13) 0px, rgba(0,0,0,0.13) 1px,
     transparent 1px, transparent 3px
   );
-  transition: opacity .4s ease;
+  transition:opacity .4s ease;
 }
 #crt::after {
   content:''; position:absolute; inset:0;
@@ -32,8 +30,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 }
 #crt.crt-off { opacity:0; }
 @keyframes flicker {
-  0%,92%,94%,97%,100%{opacity:1}
-  93%{opacity:.86} 95%{opacity:.93} 98%{opacity:.88}
+  0%,92%,94%,97%,100%{opacity:1} 93%{opacity:.86} 95%{opacity:.93} 98%{opacity:.88}
 }
 
 /* ══ PAGE 1 · PS2 STARTUP ══ */
@@ -46,14 +43,10 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 @keyframes mistPulse { from{opacity:.5} to{opacity:1} }
 #towers-wrap { position:relative; width:520px; height:340px; }
 .tower {
-  position:absolute; bottom:0; width:3px;
-  transform:scaleY(0); transform-origin:bottom;
-  border-radius:2px 2px 0 0; opacity:0;
-  animation:towerRise .15s ease-out forwards;
+  position:absolute; bottom:0; width:3px; transform:scaleY(0); transform-origin:bottom;
+  border-radius:2px 2px 0 0; opacity:0; animation:towerRise .15s ease-out forwards;
 }
-@keyframes towerRise {
-  0%{transform:scaleY(0);opacity:0} 60%{opacity:1} 100%{transform:scaleY(1);opacity:1}
-}
+@keyframes towerRise { 0%{transform:scaleY(0);opacity:0} 60%{opacity:1} 100%{transform:scaleY(1);opacity:1} }
 .orb {
   position:absolute; border-radius:50%; opacity:0;
   animation:orbFloat 3s ease-in-out infinite alternate, orbFadeIn .5s ease forwards;
@@ -62,8 +55,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 @keyframes orbFloat{from{transform:translateY(0)scale(1)}to{transform:translateY(-20px)scale(1.12)}}
 #ps2-logo {
   font-family:'Orbitron',monospace; font-size:2.4rem; font-weight:900;
-  letter-spacing:.3em; color:#fff;
-  text-shadow:0 0 20px #4488ff,0 0 50px #2244aa;
+  letter-spacing:.3em; color:#fff; text-shadow:0 0 20px #4488ff,0 0 50px #2244aa;
   opacity:0; margin-top:2rem; position:relative; z-index:2; transition:opacity 1.5s ease;
 }
 #ps2-sub {
@@ -73,32 +65,16 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 }
 
 /* ══ PAGE 2 · KONAMI GATE ══ */
-#konami-page {
-  background:#000; align-items:center; justify-content:center;
-  flex-direction:column; gap:1.8rem;
-}
-.konami-title {
-  font-family:'Orbitron',monospace; font-size:.95rem;
-  letter-spacing:.4em; color:#4488ff; text-align:center;
-  animation:blink 2s ease infinite;
-}
+#konami-page { background:#000; align-items:center; justify-content:center; flex-direction:column; gap:1.8rem; }
+.konami-title { font-family:'Orbitron',monospace; font-size:.95rem; letter-spacing:.4em; color:#4488ff; text-align:center; animation:blink 2s ease infinite; }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .konami-sequence{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;max-width:440px;}
-.k-step {
-  width:46px; height:46px; border:1px solid #224488; border-radius:6px;
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Share Tech Mono',monospace; font-size:1rem; color:#334466; transition:all .15s;
-}
+.k-step { width:46px; height:46px; border:1px solid #224488; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-size:1rem; color:#334466; transition:all .15s; }
 .k-step.done{border-color:#4488ff;color:#4488ff;background:rgba(0,100,255,.1);box-shadow:0 0 12px rgba(68,136,255,.4);}
 .k-step.active{border-color:#fff;color:#fff;background:rgba(255,255,255,.06);animation:kPulse .3s ease;}
 @keyframes kPulse{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
 .dpad{display:grid;grid-template-columns:repeat(3,56px);gap:8px;}
-.k-btn {
-  width:56px; height:56px; background:rgba(0,10,30,.8);
-  border:1px solid #223355; border-radius:8px;
-  color:#7799cc; font-family:'Share Tech Mono',monospace; font-size:1.1rem;
-  cursor:pointer; transition:all .1s; user-select:none;
-}
+.k-btn { width:56px; height:56px; background:rgba(0,10,30,.8); border:1px solid #223355; border-radius:8px; color:#7799cc; font-family:'Share Tech Mono',monospace; font-size:1.1rem; cursor:pointer; transition:all .1s; user-select:none; }
 .k-btn:hover{background:rgba(0,60,150,.3);border-color:#4488ff;color:#aaddff;}
 .k-btn:active{transform:scale(.91);}
 .k-btn.spacer{visibility:hidden;cursor:default;pointer-events:none;}
@@ -107,268 +83,229 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 .shake{animation:shake .35s ease;}
 .konami-hint{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:#223344;letter-spacing:.25em;text-align:center;}
 
-/* ══ NAVBAR ══ */
+/* ══ NAVBAR ══
+   Reverted to transparent gradient background.
+   Buttons are now big neon solid blocks with halation glow. */
 .navbar {
-  position:absolute; top:0; left:0; right:0; height:50px; z-index:20;
+  position:absolute; top:0; left:0; right:0; height:58px; z-index:20;
   display:flex; align-items:center; justify-content:space-between; padding:0 2rem;
-  /* Solid dark background so buttons always readable over photos */
-  background:rgba(0,0,8,.88);
-  border-bottom:1px solid rgba(0,255,68,.25);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
+  background:linear-gradient(180deg, rgba(0,0,0,.7) 0%, transparent 100%);
 }
 .nav-logo {
   font-family:'Orbitron',monospace; font-weight:900; font-size:1rem; letter-spacing:.3em;
-  color:#00ff44;
-  text-shadow:0 0 14px #00ff44, 0 0 30px rgba(0,255,68,.4);
-  filter:blur(.3px);
+  color:#00ff44; text-shadow:0 0 14px #00ff44, 0 0 30px rgba(0,255,68,.4); filter:blur(.3px);
 }
-.nav-logo span{color:#00ff44;}
-.nav-links{display:flex;gap:.6rem;align-items:center;}
+.nav-links { display:flex; gap:.8rem; align-items:center; }
+
+/* Neon solid button — larger, colourful, with halation */
 .nav-link {
-  background:rgba(0,255,68,.08);
-  border:1px solid rgba(0,255,68,.3);
-  font-family:'Share Tech Mono',monospace;
-  font-size:.62rem; letter-spacing:.25em;
-  color:#aaffcc;
-  cursor:pointer; padding:.3rem .9rem;
-  text-transform:uppercase; transition:all .15s;
-  clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%);
+  font-family:'Orbitron',monospace;
+  font-size:.65rem; font-weight:700; letter-spacing:.22em;
+  padding:.55rem 1.4rem;
+  cursor:pointer; text-transform:uppercase;
+  border:none; outline:none;
+  /* Clip-path parallelogram */
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+  transition:all .18s ease;
+  position:relative;
 }
-.nav-link:hover {
-  background:rgba(0,255,68,.22);
-  color:#00ff44;
-  border-color:#00ff44;
-  text-shadow:0 0 8px #00ff44;
+/* HOME button — neon green */
+.nav-link.home-btn {
+  background:#00ff44;
+  color:#000;
+  /* Halation: multi-layer box-shadow simulating lens glow */
+  box-shadow:
+    0 0 8px  #00ff44,
+    0 0 20px #00ff44,
+    0 0 45px rgba(0,255,68,.6),
+    0 0 80px rgba(0,255,68,.25);
 }
-.nav-link.active {
-  background:rgba(0,238,255,.12);
-  color:#00eeff;
-  border-color:#00eeff;
-  text-shadow:0 0 8px #00eeff;
+.nav-link.home-btn:hover {
+  background:#33ff77;
+  box-shadow:
+    0 0 12px #33ff77,
+    0 0 30px #00ff44,
+    0 0 65px rgba(0,255,68,.8),
+    0 0 110px rgba(0,255,68,.4);
+  transform:translateY(-1px) scale(1.04);
+}
+/* ARCHIVE button — neon cyan */
+.nav-link.archive-btn {
+  background:#00eeff;
+  color:#000;
+  box-shadow:
+    0 0 8px  #00eeff,
+    0 0 20px #00eeff,
+    0 0 45px rgba(0,238,255,.6),
+    0 0 80px rgba(0,238,255,.25);
+}
+.nav-link.archive-btn:hover {
+  background:#55f5ff;
+  box-shadow:
+    0 0 12px #55f5ff,
+    0 0 30px #00eeff,
+    0 0 65px rgba(0,238,255,.8),
+    0 0 110px rgba(0,238,255,.4);
+  transform:translateY(-1px) scale(1.04);
+}
+/* HOME button in archive navbar — same styles */
+.nav-link.home-btn-arch {
+  background:#00ff44; color:#000;
+  box-shadow: 0 0 8px #00ff44, 0 0 20px #00ff44, 0 0 45px rgba(0,255,68,.6);
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+  font-family:'Orbitron',monospace; font-size:.65rem; font-weight:700;
+  letter-spacing:.22em; padding:.55rem 1.4rem; cursor:pointer;
+  text-transform:uppercase; border:none;
+  transition:all .18s ease;
+}
+.nav-link.home-btn-arch:hover {
+  background:#33ff77;
+  box-shadow:0 0 12px #33ff77,0 0 30px #00ff44,0 0 65px rgba(0,255,68,.8);
+  transform:translateY(-1px) scale(1.04);
 }
 
 /* ══ PAGE 3 · HOME ══ */
 #home-page { background:#000; overflow:hidden; }
+#slide-bg { position:absolute; inset:0; background:#000; }
 
-/* Wrapper that holds ALL slide layers — the zoom+shake
-   is applied to this wrapper so slides AND gif move together */
-#slide-bg {
-  position:absolute; inset:0; background:#000;
-  /* Zoom slightly beyond the viewport so camera shake
-     doesn't reveal black edges */
-  transform-origin:center center;
-  animation:slideZoom 8s ease-in-out infinite alternate,
-            cameraShake 6s ease-in-out infinite;
-}
-/* Slow Ken-Burns-style zoom between 100% and 108% */
-@keyframes slideZoom {
-  0%   { transform:scale(1); }
-  100% { transform:scale(1.08); }
-}
-/* Subtle camera shake — small random-feeling translate offsets */
-@keyframes cameraShake {
-  0%   { transform:scale(var(--sz,1)) translate(0px,    0px); }
-  10%  { transform:scale(var(--sz,1)) translate(-2px,  1px); }
-  20%  { transform:scale(var(--sz,1)) translate(1px,   -2px); }
-  30%  { transform:scale(var(--sz,1)) translate(2px,   1px); }
-  40%  { transform:scale(var(--sz,1)) translate(-1px,  2px); }
-  50%  { transform:scale(var(--sz,1)) translate(0px,   -1px); }
-  60%  { transform:scale(var(--sz,1)) translate(1px,   2px); }
-  70%  { transform:scale(var(--sz,1)) translate(-2px,  -1px); }
-  80%  { transform:scale(var(--sz,1)) translate(2px,   0px); }
-  90%  { transform:scale(var(--sz,1)) translate(-1px,  -2px); }
-  100% { transform:scale(var(--sz,1)) translate(0px,   1px); }
-}
-/* Combine zoom and shake properly via a wrapper trick:
-   #slide-bg handles zoom, an inner wrapper handles shake */
-#slide-bg {
-  animation:none; /* reset above — use JS-driven class instead */
-}
-/* Class toggled by JS to trigger the zoom on visible slide */
+/* Each slide — Ken Burns zoom is pronounced: 1.0 → 1.22 over 12s */
 .slide-layer {
   position:absolute; inset:0; background-size:cover; background-position:center;
-  opacity:0; transition:opacity 1.8s ease;
-  /* Scale slightly large so shake never shows edges */
-  transform:scale(1.08);
+  opacity:0; transition:opacity 2s ease;
+  transform:scale(1.22); /* start at max so there's always image coverage */
   transform-origin:center center;
 }
 .slide-layer.visible {
   opacity:1;
-  animation:kenBurns 10s ease-in-out forwards,
-            cameraShakeSlide 7s ease-in-out infinite;
+  /* Ken Burns: zoom from 1.22 → 1.0, plus persistent camera shake */
+  animation:kenBurns 12s ease-in-out forwards,
+            cameraShake 8s ease-in-out infinite;
 }
 @keyframes kenBurns {
-  0%   { transform:scale(1.08) translate(0%,0%); }
-  100% { transform:scale(1.14) translate(-1%,-0.5%); }
+  0%   { transform:scale(1.22) translate(0%,0%); }
+  100% { transform:scale(1.0)  translate(0.5%,0.3%); }
 }
-@keyframes cameraShakeSlide {
-  0%,100%{ transform:scale(1.11) translate(0px,0px); }
-  15%    { transform:scale(1.11) translate(-3px,1px); }
-  30%    { transform:scale(1.11) translate(2px,-2px); }
-  45%    { transform:scale(1.11) translate(3px,2px); }
-  60%    { transform:scale(1.11) translate(-2px,3px); }
-  75%    { transform:scale(1.11) translate(1px,-1px); }
+/* Camera shake on top — overrides the scale from kenBurns via combined transform */
+@keyframes cameraShake {
+  0%,100%{ transform:scale(1.11) translate(0px,   0px); }
+  12%    { transform:scale(1.11) translate(-4px,  1.5px); }
+  25%    { transform:scale(1.11) translate(2.5px,-3px); }
+  37%    { transform:scale(1.11) translate(4px,   2px); }
+  50%    { transform:scale(1.11) translate(-2px,  3.5px); }
+  62%    { transform:scale(1.11) translate(1.5px,-1.5px); }
+  75%    { transform:scale(1.11) translate(-3.5px,1px); }
+  87%    { transform:scale(1.11) translate(3px,   -2.5px); }
 }
 
-.vignette {
-  position:absolute; inset:0; z-index:2; pointer-events:none;
-  background:radial-gradient(ellipse at center,rgba(0,0,20,.15) 25%,rgba(0,0,0,.65) 100%);
-}
-.redbar{position:absolute;top:0;bottom:0;width:5px;background:#d40020;z-index:3;}
-.redbar.l{left:0}.redbar.r{right:0}
+.vignette { position:absolute; inset:0; z-index:2; pointer-events:none; background:radial-gradient(ellipse at center,rgba(0,0,20,.15) 25%,rgba(0,0,0,.65) 100%); }
+/* Red accent bars — kept but NO dots (removed slide-dots red colour) */
+.redbar { position:absolute; top:0; bottom:0; width:5px; background:#d40020; z-index:3; }
+.redbar.l{left:0} .redbar.r{right:0}
 
-/* ── GIF overlay — centred, same zoom+shake as slides,
-   plus the same green text blur treatment ── */
+/* GIF wrapper — zoom+shake matching slides */
 #gif-wrap {
   position:absolute; top:50%; left:50%;
   transform:translate(-50%,-50%);
   z-index:8; pointer-events:none;
-  animation:gifZoom 10s ease-in-out infinite alternate,
-            cameraShakeGif 7s ease-in-out infinite;
-  transform-origin:center center;
+  animation:gifZoom 12s ease-in-out infinite alternate,
+            gifShake 8s ease-in-out infinite;
 }
 @keyframes gifZoom {
-  0%   { transform:translate(-50%,-50%) scale(1); }
-  100% { transform:translate(-50%,-50%) scale(1.07); }
+  0%  { transform:translate(-50%,-50%) scale(1.0); }
+  100%{ transform:translate(-50%,-50%) scale(1.12); }
 }
-@keyframes cameraShakeGif {
-  0%,100%{ transform:translate(-50%,-50%) scale(1.035) translate(0px,0px); }
-  15%    { transform:translate(-50%,-50%) scale(1.035) translate(-3px,1px); }
-  30%    { transform:translate(-50%,-50%) scale(1.035) translate(2px,-2px); }
-  45%    { transform:translate(-50%,-50%) scale(1.035) translate(3px,2px); }
-  60%    { transform:translate(-50%,-50%) scale(1.035) translate(-2px,3px); }
-  75%    { transform:translate(-50%,-50%) scale(1.035) translate(1px,-1px); }
+@keyframes gifShake {
+  0%,100%{ transform:translate(calc(-50% + 0px),   calc(-50% + 0px)); }
+  15%    { transform:translate(calc(-50% - 4px),   calc(-50% + 1.5px)); }
+  30%    { transform:translate(calc(-50% + 2.5px), calc(-50% - 3px)); }
+  45%    { transform:translate(calc(-50% + 4px),   calc(-50% + 2px)); }
+  60%    { transform:translate(calc(-50% - 2px),   calc(-50% + 3.5px)); }
+  75%    { transform:translate(calc(-50% + 1.5px), calc(-50% - 1.5px)); }
 }
 #gif-overlay {
   display:block;
   height:min(78vh,680px); width:auto;
-  /* Same glow/blur as the green marquee text */
   filter:blur(.5px) drop-shadow(0 0 18px rgba(0,255,68,.18));
 }
 
-/* ── Right vertical marquee — FIXED
-   Approach: use a tall single-column flex container,
-   animate translateY instead of fighting writing-mode+rotate.
-   Text is rotated 90deg per span so it reads upward. ── */
+/* Vertical right marquee */
 #marquee-right {
-  position:absolute;
-  right:0; top:50px; bottom:88px;
-  width:38px;
-  z-index:10; pointer-events:none;
-  overflow:hidden;
+  position:absolute; right:0; top:58px; bottom:88px;
+  width:38px; z-index:10; pointer-events:none; overflow:hidden;
   display:flex; justify-content:center;
 }
 #marquee-right-track {
-  /* The moving element — translateY scrolls it upward */
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:0;
+  display:flex; flex-direction:column; align-items:center; gap:0;
   animation:vScroll 18s linear infinite;
-  /* Will be populated by JS with repeated text spans */
 }
-/* Each word is a separate span rotated so it reads bottom→top */
 .vword {
-  font-family:'Orbitron',monospace;
-  font-size:1.1rem; font-weight:900;
-  color:#00ff44;
-  text-shadow:0 0 14px #00ff44, 0 0 28px rgba(0,255,68,.4);
-  filter:blur(.4px);
-  letter-spacing:.12em;
-  writing-mode:vertical-lr;
-  transform:rotate(180deg);
-  line-height:1;
-  padding:6px 0;
-  white-space:nowrap;
+  font-family:'Orbitron',monospace; font-size:1.1rem; font-weight:900;
+  color:#00ff44; text-shadow:0 0 14px #00ff44, 0 0 28px rgba(0,255,68,.4);
+  filter:blur(.4px); letter-spacing:.12em;
+  writing-mode:vertical-lr; transform:rotate(180deg);
+  line-height:1; padding:6px 0; white-space:nowrap;
 }
-@keyframes vScroll {
-  0%   { transform:translateY(0); }
-  100% { transform:translateY(-50%); }
-}
+@keyframes vScroll { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }
 
-/* ── Bottom horizontal marquee ── */
+/* Bottom marquee */
 #marquee-bottom {
   position:absolute; bottom:0; left:0; right:0; z-index:10;
-  overflow:hidden; height:88px;
-  background:transparent;
+  overflow:hidden; height:88px; background:transparent;
   display:flex; align-items:center;
 }
 #marquee-bottom-inner {
   display:inline-flex; gap:5rem; white-space:nowrap;
   animation:scrollLeft 26s linear infinite;
-  font-family:'Orbitron',monospace;
-  font-size:clamp(2rem,5vw,3.6rem);
+  font-family:'Orbitron',monospace; font-size:clamp(2rem,5vw,3.6rem);
   font-weight:900; color:#00ff44;
   text-shadow:0 0 18px #00ff44,0 0 40px rgba(0,255,68,.5),2px 2px 0 rgba(0,0,0,.55);
   filter:blur(.5px); letter-spacing:.06em;
 }
-@keyframes scrollLeft {
-  from{transform:translateX(100vw);}
-  to{transform:translateX(-100%);}
-}
+@keyframes scrollLeft { from{transform:translateX(100vw)} to{transform:translateX(-100%)} }
 
-/* ── Slide dots / hud ── */
+/* Slide counter — NO red dots, just the text counter */
 #slide-hud {
   position:absolute; bottom:92px; right:52px; z-index:11;
   font-family:'Share Tech Mono',monospace; font-size:.55rem;
   color:rgba(0,238,255,.5); letter-spacing:.3em; display:none;
 }
-#slide-dots {
-  position:absolute; bottom:92px; left:50%; transform:translateX(-50%);
-  z-index:11; display:none; gap:6px; align-items:center;
-}
-.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,transform .3s;}
-.dot.active{background:#d40020;transform:scale(1.45);box-shadow:0 0 7px #d40020;}
+/* slide-dots element kept in HTML but hidden — we only show the hud counter */
+#slide-dots { display:none !important; }
 
-/* ── Now playing — large, prominent ── */
+/* Now playing */
 #now-playing {
-  position:absolute; top:56px; left:50%; transform:translateX(-50%);
+  position:absolute; top:64px; left:50%; transform:translateX(-50%);
   z-index:15; display:none; white-space:nowrap;
   font-family:'Orbitron',monospace; font-weight:700;
-  font-size:clamp(.8rem,1.8vw,1.3rem);
-  color:#00ff44; letter-spacing:.2em;
-  text-shadow:0 0 16px #00ff44, 0 0 32px rgba(0,255,68,.45);
-  filter:blur(.3px);
+  font-size:clamp(.8rem,1.8vw,1.3rem); color:#00ff44; letter-spacing:.2em;
+  text-shadow:0 0 16px #00ff44, 0 0 32px rgba(0,255,68,.45); filter:blur(.3px);
   pointer-events:none;
 }
 
-/* ── Music toggle button ── */
+/* Music toggle */
 #music-toggle {
-  position:absolute; top:58px; right:1.5rem; z-index:15;
+  position:absolute; top:62px; right:1.5rem; z-index:15;
   background:rgba(0,0,10,.75); border:1px solid rgba(0,255,68,.4);
-  border-bottom:2px solid #00ff44;
-  color:#00ff44; font-family:'Share Tech Mono',monospace;
-  font-size:.52rem; letter-spacing:.25em; padding:.35rem .85rem;
-  cursor:pointer; transition:background .2s, color .2s;
-  text-transform:uppercase;
+  border-bottom:2px solid #00ff44; color:#00ff44;
+  font-family:'Share Tech Mono',monospace; font-size:.52rem;
+  letter-spacing:.25em; padding:.35rem .85rem; cursor:pointer;
+  transition:background .2s, color .2s; text-transform:uppercase;
   clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);
 }
 #music-toggle:hover{background:rgba(0,255,68,.12);}
 #music-toggle.muted{color:#556655;border-color:rgba(0,255,68,.2);border-bottom-color:rgba(0,255,68,.2);}
 
-/* ── Music prompt overlay ── */
-#music-prompt {
-  position:absolute; inset:0; z-index:100;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:1rem; cursor:pointer; background:rgba(0,0,0,.55);
-}
+/* Music prompt */
+#music-prompt { position:absolute; inset:0; z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; cursor:pointer; background:rgba(0,0,0,.55); }
 #music-prompt.hidden{display:none;}
-#music-prompt-text {
-  font-family:'Orbitron',monospace; font-size:1rem; font-weight:700;
-  color:#00ff44; letter-spacing:.3em; text-align:center;
-  text-shadow:0 0 20px #00ff44; animation:blink 1.5s ease infinite;
-}
-#music-prompt-sub {
-  font-family:'Share Tech Mono',monospace; font-size:.6rem;
-  color:rgba(0,255,68,.6); letter-spacing:.25em; text-align:center;
-}
+#music-prompt-text { font-family:'Orbitron',monospace; font-size:1rem; font-weight:700; color:#00ff44; letter-spacing:.3em; text-align:center; text-shadow:0 0 20px #00ff44; animation:blink 1.5s ease infinite; }
+#music-prompt-sub { font-family:'Share Tech Mono',monospace; font-size:.6rem; color:rgba(0,255,68,.6); letter-spacing:.25em; text-align:center; }
 
 /* ══ PAGE 4 · ARCHIVE ══ */
 #archive-page{background:#080810;overflow:hidden;}
 .archive-wrap{display:flex;flex-direction:column;height:100%;}
 .archive-header{
-  flex-shrink:0; min-height:50px; padding:0 2rem;
+  flex-shrink:0; height:58px; padding:0 2rem;
   display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem;
   background:rgba(0,5,20,.96); border-bottom:2px solid #d40020; position:relative;
 }
@@ -377,14 +314,11 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 #archive-count{font-family:'Share Tech Mono',monospace;font-size:.55rem;color:#334466;letter-spacing:.3em;margin-left:.5rem;}
 .archive-controls{display:flex;gap:.8rem;align-items:center;}
 
-/* CRT toggle button in archive */
+/* CRT toggle */
 #crt-toggle {
-  background:rgba(0,10,30,.8); border:1px solid rgba(0,200,255,.3);
-  border-bottom:2px solid #00eeff;
-  color:#00eeff; font-family:'Share Tech Mono',monospace;
-  font-size:.5rem; letter-spacing:.2em; padding:.28rem .7rem;
-  cursor:pointer; transition:background .2s;
-  text-transform:uppercase;
+  background:rgba(0,10,30,.8); border:1px solid rgba(0,200,255,.3); border-bottom:2px solid #00eeff;
+  color:#00eeff; font-family:'Share Tech Mono',monospace; font-size:.5rem; letter-spacing:.2em;
+  padding:.28rem .7rem; cursor:pointer; transition:background .2s; text-transform:uppercase;
   clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%);
 }
 #crt-toggle:hover{background:rgba(0,200,255,.1);}
@@ -394,67 +328,137 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 .archive-scroll::-webkit-scrollbar{width:3px;}
 .archive-scroll::-webkit-scrollbar-thumb{background:#d40020;}
 
-/* ── Folder section ── */
-.folder-section { margin-bottom:2.5rem; }
-.folder-header {
-  margin-bottom:1rem; padding-bottom:.5rem;
-  border-bottom:1px solid rgba(212,0,32,.3);
-  position:relative;
-}
-.folder-header::before {
-  content:'▶'; color:#d40020; font-size:.6rem; margin-right:.5rem;
-}
-.folder-name {
-  font-family:'Orbitron',monospace; font-size:.9rem; font-weight:700;
-  color:#fff; letter-spacing:.15em;
-  text-shadow:1px 1px 0 #d40020;
-}
-
-/* ── Featured folder — special treatment ── */
+/* ── Featured folder section (always expanded, always shown) ── */
+.folder-section { margin-bottom:2rem; }
 .folder-section.featured {
-  margin-bottom:3rem;
-  padding:1.2rem 1.2rem .8rem;
-  border:1px solid rgba(0,255,68,.25);
-  border-radius:2px;
-  background:rgba(0,255,68,.03);
-  position:relative;
+  margin-bottom:2.5rem; padding:1.2rem 1.2rem .8rem;
+  border:1px solid rgba(0,255,68,.25); border-radius:2px;
+  background:rgba(0,255,68,.03); position:relative;
 }
 .folder-section.featured::before {
-  content:'';
-  position:absolute; top:0; left:0; right:0; height:2px;
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
   background:linear-gradient(90deg,transparent,#00ff44,transparent);
 }
-.folder-section.featured .folder-header {
-  border-bottom-color:rgba(0,255,68,.3);
-}
-.folder-section.featured .folder-header::before {
-  content:'★'; color:#00ff44;
-}
+.folder-section.featured .folder-header { border-bottom-color:rgba(0,255,68,.3); }
+.folder-section.featured .folder-header::before { content:'★'; color:#00ff44; }
 .folder-section.featured .folder-name {
-  color:#00ff44;
-  font-size:1.1rem;
+  color:#00ff44; font-size:1.1rem;
   text-shadow:0 0 14px #00ff44, 1px 1px 0 rgba(0,0,0,.5);
 }
-/* "FEATURED" badge next to folder name */
 .featured-badge {
-  display:inline-block;
-  font-family:'Share Tech Mono',monospace; font-size:.45rem;
+  display:inline-block; font-family:'Share Tech Mono',monospace; font-size:.45rem;
   letter-spacing:.25em; color:#000; background:#00ff44;
-  padding:2px 6px; margin-left:.6rem;
-  vertical-align:middle; font-weight:700;
-  text-transform:uppercase;
+  padding:2px 6px; margin-left:.6rem; vertical-align:middle;
+  font-weight:700; text-transform:uppercase;
 }
-/* Parse the NAME.LOCATION.DATE.FILMTYPE pattern */
-.folder-meta {
-  display:flex; gap:1.2rem; margin-top:.4rem; flex-wrap:wrap;
-}
-.folder-meta-item {
-  font-family:'Share Tech Mono',monospace; font-size:.5rem;
-  letter-spacing:.2em; display:flex; align-items:center; gap:.3rem;
-}
-.folder-meta-item .meta-label{color:#334466;}
-.folder-meta-item .meta-value{color:#00eeff;}
 
+/* ── Collapsible folder tab — retro neon computer folder style ── */
+.folder-tab {
+  margin-bottom:.8rem; position:relative;
+}
+
+/* The clickable folder tab header */
+.folder-tab-btn {
+  width:100%; display:flex; align-items:stretch;
+  background:none; border:none; cursor:pointer; padding:0;
+  position:relative; text-align:left;
+}
+
+/* Tab "ear" — the raised bit at the top-left like a real folder */
+.folder-tab-btn::before {
+  content:'';
+  position:absolute; top:-10px; left:0;
+  width:120px; height:10px;
+  background:#001a00;
+  border:1px solid rgba(0,255,68,.5); border-bottom:none;
+  border-radius:4px 4px 0 0;
+}
+
+/* Main folder body */
+.folder-tab-inner {
+  flex:1; display:flex; align-items:center; justify-content:space-between;
+  padding:.7rem 1rem .7rem 1.2rem;
+  background:linear-gradient(135deg, #001a00 0%, #002800 60%, #001200 100%);
+  border:1px solid rgba(0,255,68,.45);
+  border-top:2px solid #00ff44;
+  position:relative; overflow:hidden;
+  transition:background .2s, border-color .2s, box-shadow .2s;
+}
+/* Scan-line texture on folder */
+.folder-tab-inner::after {
+  content:'';
+  position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,255,68,.03) 3px, rgba(0,255,68,.03) 4px);
+}
+.folder-tab-btn:hover .folder-tab-inner {
+  background:linear-gradient(135deg, #002600 0%, #003c00 60%, #001a00 100%);
+  border-color:#00ff44;
+  box-shadow:0 0 12px rgba(0,255,68,.3), inset 0 0 20px rgba(0,255,68,.05);
+}
+.folder-tab-btn:hover .folder-tab-inner .folder-name { text-shadow:0 0 12px #00ff44; }
+
+/* Left section: icon + name + meta */
+.folder-tab-left { display:flex; align-items:center; gap:.8rem; }
+
+/* Neon folder icon */
+.folder-icon {
+  font-size:1.4rem; line-height:1;
+  filter:drop-shadow(0 0 6px #00ff44);
+  flex-shrink:0;
+}
+
+.folder-name {
+  font-family:'Orbitron',monospace; font-size:.8rem; font-weight:700;
+  color:#00ff44; letter-spacing:.15em;
+  text-shadow:0 0 8px rgba(0,255,68,.6);
+  transition:text-shadow .2s;
+}
+
+/* Metadata pills */
+.folder-meta { display:flex; gap:.8rem; margin-top:.2rem; flex-wrap:wrap; }
+.folder-meta-item {
+  font-family:'Share Tech Mono',monospace; font-size:.48rem;
+  letter-spacing:.18em; display:flex; align-items:center; gap:.25rem;
+}
+.meta-label{color:#336633;} .meta-value{color:#00cc88;}
+
+/* Right section: photo count + chevron */
+.folder-tab-right { display:flex; align-items:center; gap:1rem; flex-shrink:0; }
+.folder-count {
+  font-family:'Share Tech Mono',monospace; font-size:.5rem;
+  color:#336633; letter-spacing:.2em; border:1px solid #1a4d1a;
+  padding:2px 8px; background:rgba(0,0,0,.4);
+}
+.folder-chevron {
+  font-size:.7rem; color:#00ff44; transition:transform .25s ease;
+  text-shadow:0 0 8px #00ff44; flex-shrink:0;
+}
+.folder-tab.open .folder-chevron { transform:rotate(90deg); }
+
+/* Loading spinner for lazy photo load */
+.folder-loading {
+  display:none; padding:1rem; text-align:center;
+  font-family:'Share Tech Mono',monospace; font-size:.55rem;
+  color:#336633; letter-spacing:.2em;
+}
+.folder-tab.loading .folder-loading { display:block; }
+.folder-loading-spinner {
+  display:inline-block; width:18px; height:18px;
+  border:2px solid #1a4d1a; border-top-color:#00ff44;
+  border-radius:50%; animation:spin .6s linear infinite;
+  vertical-align:middle; margin-right:.5rem;
+}
+
+/* Photo grid inside collapsed tab — hidden by default */
+.folder-grid-wrap {
+  display:none; padding:.8rem 0 0 0;
+  border:1px solid rgba(0,255,68,.2); border-top:none;
+  background:rgba(0,20,0,.3);
+  padding:.8rem;
+}
+.folder-tab.open .folder-grid-wrap { display:block; }
+
+/* Shared photo grid */
 .photo-grid{columns:3;column-gap:12px;}
 @media(max-width:700px){.photo-grid{columns:2}}
 @media(max-width:420px){.photo-grid{columns:1}}
@@ -466,29 +470,30 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 .grid-card:hover .grid-overlay{opacity:1;}
 .grid-overlay span{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:#fff;letter-spacing:.15em;}
 .grid-num{position:absolute;top:8px;left:8px;z-index:4;font-family:'Share Tech Mono',monospace;font-size:.48rem;color:#00eeff;background:rgba(0,0,0,.65);border:1px solid rgba(0,80,200,.45);border-bottom:2px solid #d40020;padding:1px 5px;letter-spacing:.18em;}
+
+/* Featured folder's own grid (no tab, always shown) */
+.folder-header { margin-bottom:1rem; padding-bottom:.5rem; border-bottom:1px solid rgba(212,0,32,.3); }
+.folder-header::before { content:'▶'; color:#d40020; font-size:.6rem; margin-right:.5rem; }
+
 #archive-empty{display:none;flex-direction:column;align-items:center;justify-content:center;height:300px;gap:1rem;font-family:'Share Tech Mono',monospace;color:#334466;letter-spacing:.3em;text-align:center;font-size:.7rem;}
 
-/* ══ LIGHTBOX · IE6 — maximised ══
-   Window fills as much screen as possible while
-   keeping the IE chrome and the image inside it. */
-#lightbox{
+/* ══ LIGHTBOX · IE6 — fullscreen, aspect ratio preserved ══ */
+#lightbox {
   position:fixed; inset:0; z-index:5000;
   display:none; align-items:center; justify-content:center;
-  background:rgba(0,0,10,.92); padding:12px;
+  background:rgba(0,0,10,.94); padding:8px;
 }
 #lightbox.open{display:flex;}
-
-/* Window itself fills available space */
-.ie-win{
-  /* Use almost the full viewport */
-  width:min(98vw,1400px);
-  /* Height is flex-driven by content */
+.ie-win {
+  /* Near-full viewport */
+  width:calc(100vw - 16px);
+  max-width:1600px;
+  height:calc(100vh - 16px);
   display:flex; flex-direction:column;
   background:#d4d0c8;
   border:2px solid; border-color:#fff #404040 #404040 #fff;
   box-shadow:2px 2px 0 rgba(0,0,0,.5),8px 8px 24px rgba(0,0,0,.75);
   font-family:Tahoma,sans-serif;
-  max-height:calc(100vh - 24px);
 }
 .ie-titlebar{background:linear-gradient(180deg,#0a246a 0%,#3a6ea5 100%);padding:3px 6px;height:26px;display:flex;align-items:center;justify-content:space-between;user-select:none;flex-shrink:0;}
 .ie-title-left{color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;}
@@ -505,18 +510,17 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 .ie-addr{flex:1;background:#fff;border:1px solid #808080;box-shadow:inset 1px 1px 2px rgba(0,0,0,.2);padding:1px 6px;height:22px;display:flex;align-items:center;gap:4px;font-size:11px;font-family:Tahoma,sans-serif;overflow:hidden;}
 .ie-progress{height:4px;background:#d4d0c8;overflow:hidden;flex-shrink:0;}
 .ie-progress-fill{height:100%;background:#0a246a;width:0;transition:width .75s ease;}
-/* Image body — expands to fill all remaining space */
-.ie-body{
-  background:#000; border:2px inset #808080; margin:3px;
-  flex:1; min-height:0;
+/* Image area — takes all remaining space, preserves aspect ratio */
+.ie-body {
+  background:#111; border:2px inset #808080; margin:3px;
+  flex:1; min-height:0; /* critical: allows shrinking inside flex column */
   display:flex; align-items:center; justify-content:center; overflow:hidden;
 }
-.ie-body img{
-  display:block;
-  /* Fill the flex body completely, maintaining aspect ratio */
+.ie-body img {
+  /* max-width/max-height within the flex container preserves aspect ratio */
   max-width:100%; max-height:100%;
   width:auto; height:auto;
-  object-fit:contain;
+  display:block; object-fit:contain;
 }
 .ie-fileinfo{background:#f0f0f0;border-top:1px solid #ccc;padding:3px 8px;font-size:10px;color:#444;display:flex;justify-content:space-between;flex-shrink:0;}
 .ie-nav{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;background:#d4d0c8;border-top:1px solid #808080;flex-shrink:0;}
@@ -535,11 +539,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 <body>
 
 <div id="crt"></div>
-
-<div id="loading-screen">
-  <div class="spinner"></div>
-  <div>LOADING…</div>
-</div>
+<div id="loading-screen"><div class="spinner"></div><div>LOADING…</div></div>
 
 <!-- ══ PAGE 1 · PS2 STARTUP ══ -->
 <div id="ps2-page" class="page">
@@ -576,7 +576,6 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 
 <!-- ══ PAGE 3 · HOME ══ -->
 <div id="home-page" class="page">
-
   <div id="slide-bg"></div>
   <div class="vignette"></div>
   <div class="redbar l"></div>
@@ -585,58 +584,45 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
   <nav class="navbar">
     <div class="nav-logo">Film Fragments</div>
     <div class="nav-links">
-      <button class="nav-link active" onclick="goHome()">HOME</button>
-      <button class="nav-link" onclick="goArchive()">ARCHIVE</button>
+      <button class="nav-link home-btn" onclick="goHome()">HOME</button>
+      <button class="nav-link archive-btn" onclick="goArchive()">ARCHIVE</button>
     </div>
   </nav>
 
-  <!-- GIF centred, inside zoom+shake wrapper -->
   <div id="gif-wrap">
     <img id="gif-overlay" src="GLITCH_BRAINROT2.gif" alt="" aria-hidden="true">
   </div>
 
-  <!-- Right vertical scrolling marquee — fixed approach using translateY -->
   <div id="marquee-right">
-    <div id="marquee-right-track">
-      <!-- populated by JS: doubles the word list so scroll loops seamlessly -->
-    </div>
+    <div id="marquee-right-track"></div>
   </div>
 
+  <!-- slide-hud only, no dot row -->
   <div id="slide-hud">01 / 01</div>
   <div id="slide-dots"></div>
 
-  <!-- Now playing — large, centred below navbar -->
   <div id="now-playing"></div>
-
-  <!-- Music on/off toggle -->
   <button id="music-toggle" onclick="toggleMusic()">♪ MUSIC ON</button>
 
-  <!-- Click-to-start overlay (autoplay blocked) -->
   <div id="music-prompt" class="hidden">
     <div id="music-prompt-text">▶ CLICK TO ENTER ◀</div>
     <div id="music-prompt-sub">click anywhere to start music</div>
   </div>
 
-  <!-- Bottom large green marquee -->
   <div id="marquee-bottom">
     <div id="marquee-bottom-inner">
-      Brain rot, I can't stop it anymore &nbsp;&nbsp;//&nbsp;&nbsp;
+      Sea of Fragments &nbsp;&nbsp;//&nbsp;&nbsp;
       (Warning? Don't Worry) &nbsp;&nbsp;//&nbsp;&nbsp;
       I'm being swept away &nbsp;&nbsp;//&nbsp;&nbsp;
       I can't break free from this loop &nbsp;&nbsp;//&nbsp;&nbsp;
       Even if I come to my senses &nbsp;&nbsp;//&nbsp;&nbsp;
-      Brain rot, sugar's nothing compared to it &nbsp;&nbsp;//&nbsp;&nbsp;
-      Brain rot, 'till I turn to ashes, get me feeling high &nbsp;&nbsp;//&nbsp;&nbsp;
-      Brain rot, I can't stop it anymore &nbsp;&nbsp;//&nbsp;&nbsp;
-      Brain rot, sugar's nothing compared to it &nbsp;&nbsp;//&nbsp;&nbsp;
-      Brain rot, 'till I turn to ashes, get me feeling high &nbsp;&nbsp;//&nbsp;&nbsp;
+      Sea of Fragments &nbsp;&nbsp;//&nbsp;&nbsp;
       (Warning? Don't Worry) &nbsp;&nbsp;//&nbsp;&nbsp;
-      I'm goin' crazy &nbsp;&nbsp;//&nbsp;&nbsp;
-      Even if I come to my senses &nbsp;&nbsp;//&nbsp;&nbsp;
+      I'm being swept away &nbsp;&nbsp;//&nbsp;&nbsp;
       I can't break free from this loop &nbsp;&nbsp;//&nbsp;&nbsp;
+      Even if I come to my senses &nbsp;&nbsp;//&nbsp;&nbsp;
     </div>
   </div>
-
 </div>
 
 <!-- ══ PAGE 4 · ARCHIVE ══ -->
@@ -648,14 +634,12 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
         <div id="archive-count">[ 0 FILES ]</div>
       </div>
       <div class="archive-controls">
-        <!-- CRT toggle -->
         <button id="crt-toggle" onclick="toggleCRT()">CRT ON</button>
-        <button class="nav-link" onclick="goHome()">◀ HOME</button>
+        <button class="nav-link home-btn-arch" onclick="goHome()">HOME</button>
       </div>
     </header>
     <div class="archive-scroll" id="archive-scroll">
       <div id="archive-empty">// ADD IMAGES TO SUBFOLDERS IN /photos ON GITHUB //</div>
-      <!-- Folder sections injected by JS -->
     </div>
   </div>
 </div>
@@ -707,29 +691,25 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; }
 <audio id="audio-player"></audio>
 
 <script>
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    STATE
-═══════════════════════════════════════════════════ */
-// photos is now an object: { folderName: [{name, url, folder}, ...], ... }
-// flatPhotos is a flat array for lightbox navigation
-let photoFolders  = {};
-let flatPhotos    = [];
-let tracks        = [];
-let currentSlide  = 0;
-let slideTimer    = null;
-let lbIdx         = 0;
-let currentTrack  = 0;
-let musicStarted  = false;
-let musicMuted    = false;
-let crtOn         = true;
-const audioEl     = document.getElementById('audio-player');
+═══════════════════════════════════════ */
+let photoFolders = {};   // { folderKey: [{name,url,folder},...] }
+let featuredPhotos = []; // only featured, for homepage slideshow
+let flatPhotos   = [];   // all photos, for lightbox global index
+let tracks       = [];
+let currentSlide = 0;
+let slideTimer   = null;
+let lbIdx        = 0;
+let currentTrack = 0;
+let musicStarted = false;
+let musicMuted   = false;
+let crtOn        = true;
+const audioEl    = document.getElementById('audio-player');
 
-/* ═══════════════════════════════════════════════════
-   LOAD MANIFESTS
-   photos/manifest.json is now an OBJECT:
-   { "folderName": ["file1.jpg", ...], "_root": [...] }
-   music/manifest.json is still a flat array.
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   MANIFEST LOADING
+═══════════════════════════════════════ */
 async function loadManifests() {
   async function fetchJSON(path) {
     try {
@@ -738,192 +718,152 @@ async function loadManifests() {
       return await r.json();
     } catch(e) { console.warn('Error:', path, e); return null; }
   }
-
   const [photoData, musicData] = await Promise.all([
     fetchJSON('photos/manifest.json'),
     fetchJSON('music/manifest.json'),
   ]);
 
-  // ── Photos ──
-  photoFolders = {};
-  flatPhotos   = [];
+  photoFolders = {}; featuredPhotos = []; flatPhotos = [];
 
   if (photoData) {
-    if (Array.isArray(photoData)) {
-      const entries = photoData.map(n => ({ name:n, url:'photos/'+encodeURIComponent(n), folder:'_root' }));
-      photoFolders['_root'] = entries;
-      flatPhotos = entries;
-    } else {
-      // Sort keys: featured first, _root last, rest alphabetical
-      const sortedKeys = Object.keys(photoData).sort((a,b)=>{
-        if (a.toLowerCase()==='featured') return -1;
-        if (b.toLowerCase()==='featured') return 1;
-        if (a==='_root') return 1;
-        if (b==='_root') return -1;
-        return a.localeCompare(b);
-      });
-      sortedKeys.forEach(folder => {
-        const entries = photoData[folder].map(n => ({
-          name: n,
-          url:  'photos/' + (folder === '_root' ? '' : encodeURIComponent(folder)+'/') + encodeURIComponent(n),
-          folder: folder
-        }));
-        photoFolders[folder] = entries;
-        flatPhotos.push(...entries);
-      });
-    }
+    const isArray = Array.isArray(photoData);
+    const data    = isArray ? { _root: photoData } : photoData;
+
+    // Sort: featured first, _root last, rest alpha
+    const keys = Object.keys(data).sort((a,b)=>{
+      if (a.toLowerCase()==='featured') return -1;
+      if (b.toLowerCase()==='featured') return 1;
+      if (a==='_root') return 1; if (b==='_root') return -1;
+      return a.localeCompare(b);
+    });
+
+    keys.forEach(folder => {
+      const entries = data[folder].map(n => ({
+        name: n,
+        url:  'photos/' + (folder==='_root' ? '' : encodeURIComponent(folder)+'/') + encodeURIComponent(n),
+        folder
+      }));
+      photoFolders[folder] = entries;
+      flatPhotos.push(...entries);
+      if (folder.toLowerCase() === 'featured') featuredPhotos = entries;
+    });
+
+    // If no featured folder, fall back to all photos for slideshow
+    if (featuredPhotos.length === 0) featuredPhotos = flatPhotos;
   }
 
-  // ── Music ──
-  tracks = [];
-  if (Array.isArray(musicData)) {
-    tracks = musicData.map(n => ({ name:n, url:'music/'+encodeURIComponent(n) }));
-  }
+  tracks = Array.isArray(musicData)
+    ? musicData.map(n => ({ name:n, url:'music/'+encodeURIComponent(n) }))
+    : [];
 
-  console.log('Folders:', Object.keys(photoFolders), '| Total photos:', flatPhotos.length, '| Tracks:', tracks.length);
+  console.log('Featured:', featuredPhotos.length, '| Total:', flatPhotos.length, '| Tracks:', tracks.length);
 }
 
-/* ═══════════════════════════════════════════════════
-   PARSE FOLDER NAME
-   Pattern: NAME.LOCATION.DATE.FILMTYPE
-   e.g. "portrait.london.2024-06.kodak-gold-200"
-   Returns { name, location, date, filmType, raw }
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   PARSE FOLDER NAME — LOCATION.DATE.FILM
+═══════════════════════════════════════ */
 function parseFolderName(raw) {
   if (raw === '_root') return { name:'Unsorted', location:'', date:'', filmType:'', raw };
+  if (raw.toLowerCase() === 'featured') return { name:'Featured', location:'', date:'', filmType:'', raw };
   const parts = raw.split('.');
+  // Pattern: LOCATION.DATE.FILM (3 parts)
   return {
     raw,
     name:     parts[0] ? parts[0].replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : raw,
-    location: parts[1] ? parts[1].replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : '',
-    date:     parts[2] ? parts[2].replace(/-/g,' ') : '',
-    filmType: parts[3] ? parts[3].replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : '',
+    location: parts[0] ? parts[0].replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : '',
+    date:     parts[1] ? parts[1].replace(/-/g,' ') : '',
+    filmType: parts[2] ? parts[2].replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) : '',
   };
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    MUSIC PLAYER
-═══════════════════════════════════════════════════ */
-function shuffleArray(arr) {
-  for (let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
-}
+═══════════════════════════════════════ */
+function shuffleArray(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}}
 
-function startMusic() {
-  if (musicStarted || tracks.length===0) return;
-  musicStarted = true;
-  shuffleArray(tracks);
-  currentTrack = 0;
-  audioEl.addEventListener('ended', () => {
-    currentTrack = (currentTrack+1) % tracks.length;
-    playTrack(currentTrack);
-  });
+function startMusic(){
+  if(musicStarted||tracks.length===0) return;
+  musicStarted=true; shuffleArray(tracks); currentTrack=0;
+  audioEl.addEventListener('ended',()=>{currentTrack=(currentTrack+1)%tracks.length;playTrack(currentTrack);});
   playTrack(currentTrack);
 }
-
-function playTrack(idx) {
-  const t = tracks[idx]; if(!t) return;
-  audioEl.src = t.url; audioEl.volume = musicMuted ? 0 : 0.75;
-  const p = audioEl.play();
-  if (p) {
-    p.then(() => { hideMusicPrompt(); showNowPlaying(t.name); })
-     .catch(() => showMusicPrompt());
-  }
+function playTrack(idx){
+  const t=tracks[idx]; if(!t) return;
+  audioEl.src=t.url; audioEl.volume=musicMuted?0:.75;
+  const p=audioEl.play();
+  if(p) p.then(()=>{hideMusicPrompt();showNowPlaying(t.name);}).catch(()=>showMusicPrompt());
 }
-
-function toggleMusic() {
-  musicMuted = !musicMuted;
-  audioEl.volume = musicMuted ? 0 : 0.75;
-  const btn = document.getElementById('music-toggle');
-  btn.textContent = musicMuted ? '♪ MUSIC OFF' : '♪ MUSIC ON';
-  btn.classList.toggle('muted', musicMuted);
+function toggleMusic(){
+  musicMuted=!musicMuted; audioEl.volume=musicMuted?0:.75;
+  const btn=document.getElementById('music-toggle');
+  btn.textContent=musicMuted?'♪ MUSIC OFF':'♪ MUSIC ON';
+  btn.classList.toggle('muted',musicMuted);
 }
-
-function showMusicPrompt() {
+function showMusicPrompt(){
   document.getElementById('music-prompt').classList.remove('hidden');
-  const resume = () => {
-    audioEl.play().then(() => { hideMusicPrompt(); showNowPlaying(tracks[currentTrack]?.name||''); }).catch(()=>{});
-    document.removeEventListener('click', resume);
-  };
-  document.addEventListener('click', resume);
+  const resume=()=>{audioEl.play().then(()=>{hideMusicPrompt();showNowPlaying(tracks[currentTrack]?.name||'');}).catch(()=>{});document.removeEventListener('click',resume);};
+  document.addEventListener('click',resume);
 }
-function hideMusicPrompt() { document.getElementById('music-prompt').classList.add('hidden'); }
+function hideMusicPrompt(){document.getElementById('music-prompt').classList.add('hidden');}
+function showNowPlaying(fn){const el=document.getElementById('now-playing');el.textContent='♪  '+fn.replace(/\.[^.]+$/,'');el.style.display='block';}
 
-function showNowPlaying(filename) {
-  const el = document.getElementById('now-playing');
-  el.textContent = '♪  ' + filename.replace(/\.[^.]+$/,'');
-  el.style.display = 'block';
-}
-
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    CRT TOGGLE
-═══════════════════════════════════════════════════ */
-function toggleCRT() {
-  crtOn = !crtOn;
-  document.getElementById('crt').classList.toggle('crt-off', !crtOn);
-  const btn = document.getElementById('crt-toggle');
-  btn.textContent = crtOn ? 'CRT ON' : 'CRT OFF';
-  btn.classList.toggle('off', !crtOn);
+═══════════════════════════════════════ */
+function toggleCRT(){
+  crtOn=!crtOn;
+  document.getElementById('crt').classList.toggle('crt-off',!crtOn);
+  const btn=document.getElementById('crt-toggle');
+  btn.textContent=crtOn?'CRT ON':'CRT OFF';
+  btn.classList.toggle('off',!crtOn);
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    PAGE ROUTER
-═══════════════════════════════════════════════════ */
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+═══════════════════════════════════════ */
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    PS2 STARTUP SOUND
-═══════════════════════════════════════════════════ */
-let actx = null;
-function ensureActx() {
-  if(!actx) actx=new(window.AudioContext||window.webkitAudioContext)();
-  if(actx.state==='suspended') actx.resume();
-}
-function playPS2Sound() {
-  try {
+═══════════════════════════════════════ */
+let actx=null;
+function ensureActx(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}
+function playPS2Sound(){
+  try{
     ensureActx();
-    const mg=actx.createGain(); mg.gain.value=0.25; mg.connect(actx.destination);
-    const notes=[[.20,55,.28,.45],[.20,110,.28,.35],[.55,82.5,.38,.4],[.55,165,.38,.28],
-      [1.0,110,.45,.45],[1.0,220,.45,.3],[1.55,146.8,.45,.4],[1.55,293.7,.45,.28],
-      [2.1,196,.5,.45],[2.1,392,.5,.3],[2.75,261.6,1.4,.55],[2.75,329.6,1.4,.45],
-      [2.75,392,1.4,.4],[2.75,523.3,1.4,.3]];
-    const t0=actx.currentTime;
-    notes.forEach(([t,hz,dur,pk])=>{
+    const mg=actx.createGain();mg.gain.value=0.25;mg.connect(actx.destination);
+    [[.20,55,.28,.45],[.20,110,.28,.35],[.55,82.5,.38,.4],[.55,165,.38,.28],
+     [1.0,110,.45,.45],[1.0,220,.45,.3],[1.55,146.8,.45,.4],[1.55,293.7,.45,.28],
+     [2.1,196,.5,.45],[2.1,392,.5,.3],[2.75,261.6,1.4,.55],[2.75,329.6,1.4,.45],
+     [2.75,392,1.4,.4],[2.75,523.3,1.4,.3]].forEach(([t,hz,dur,pk])=>{
       const o=actx.createOscillator(),g=actx.createGain();
-      o.connect(g);g.connect(mg);o.type='sine';o.frequency.value=hz;
-      o.detune.value=(Math.random()*6)-3;
-      g.gain.setValueAtTime(0,t0+t);
-      g.gain.linearRampToValueAtTime(pk,t0+t+.06);
-      g.gain.linearRampToValueAtTime(0,t0+t+dur);
+      o.connect(g);g.connect(mg);o.type='sine';o.frequency.value=hz;o.detune.value=(Math.random()*6)-3;
+      const t0=actx.currentTime;
+      g.gain.setValueAtTime(0,t0+t);g.gain.linearRampToValueAtTime(pk,t0+t+.06);g.gain.linearRampToValueAtTime(0,t0+t+dur);
       o.start(t0+t);o.stop(t0+t+dur+.1);
     });
   }catch(e){}
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    PS2 STARTUP ANIMATION
-═══════════════════════════════════════════════════ */
-function runPS2() {
+═══════════════════════════════════════ */
+function runPS2(){
   const wrap=document.getElementById('towers-wrap');
   for(let i=0;i<90;i++){
-    const el=document.createElement('div'); el.className='tower';
+    const el=document.createElement('div');el.className='tower';
     el.style.cssText=`left:${(i/90)*520-2}px;height:${Math.random()*218+72}px;animation-delay:${i*.032+Math.random()*.015}s;background:linear-gradient(to top,#2244cc,#6699ff 50%,#fff);box-shadow:0 0 6px #88aaff,0 0 16px #3366cc;`;
     wrap.appendChild(el);
   }
   [{x:175,y:80,r:22,c:'#aaddff',d:3.1,dl:1.5},{x:310,y:110,r:16,c:'#99ccff',d:2.7,dl:2.0},
    {x:90,y:130,r:12,c:'#ccddff',d:3.5,dl:2.4},{x:395,y:88,r:18,c:'#bbddff',d:2.9,dl:1.8},
    {x:248,y:52,r:10,c:'#eef4ff',d:4.0,dl:2.8}].forEach(o=>{
-    const el=document.createElement('div'); el.className='orb';
+    const el=document.createElement('div');el.className='orb';
     el.style.cssText=`left:${o.x}px;top:${o.y}px;width:${o.r*2}px;height:${o.r*2}px;background:radial-gradient(circle at 35% 35%,#fff 0%,${o.c} 40%,transparent 70%);box-shadow:0 0 ${o.r*2}px ${o.c};animation-duration:${o.d}s,.4s;animation-delay:${o.dl}s,${o.dl}s;`;
     wrap.appendChild(el);
   });
   document.addEventListener('click',()=>{ensureActx();playPS2Sound();},{once:true});
-  setTimeout(()=>{
-    document.getElementById('ps2-logo').style.opacity='1';
-    setTimeout(()=>document.getElementById('ps2-sub').style.opacity='1',600);
-  },3000);
+  setTimeout(()=>{document.getElementById('ps2-logo').style.opacity='1';setTimeout(()=>document.getElementById('ps2-sub').style.opacity='1',600);},3000);
   setTimeout(()=>{
     const p=document.getElementById('ps2-page');
     p.style.transition='opacity 1.2s ease';p.style.opacity='0';
@@ -931,51 +871,34 @@ function runPS2() {
   },5500);
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    KONAMI CODE
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 const SEQ=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
 const LABELS=['▲','▲','▼','▼','◀','▶','◀','▶','B','A'];
 let kPos=0;
-
-function buildKonamiUI(){
-  const el=document.getElementById('konami-seq');
-  LABELS.forEach((lbl,i)=>{const s=document.createElement('div');s.className='k-step';s.id='ks'+i;s.textContent=lbl;el.appendChild(s);});
-}
-
+function buildKonamiUI(){const el=document.getElementById('konami-seq');LABELS.forEach((lbl,i)=>{const s=document.createElement('div');s.className='k-step';s.id='ks'+i;s.textContent=lbl;el.appendChild(s);});}
 function feedKonami(key){
   if(key.toLowerCase()===SEQ[kPos].toLowerCase()){
-    document.getElementById('ks'+kPos).classList.remove('active');
-    document.getElementById('ks'+kPos).classList.add('done');
-    kPos++;
-    document.getElementById('konami-error').innerHTML='&nbsp;';
-    if(kPos>=SEQ.length){enterGallery();}
-    else{const nx=document.getElementById('ks'+kPos);if(nx){nx.classList.add('active');setTimeout(()=>nx.classList.remove('active'),350);}}
+    document.getElementById('ks'+kPos).classList.remove('active');document.getElementById('ks'+kPos).classList.add('done');kPos++;document.getElementById('konami-error').innerHTML='&nbsp;';
+    if(kPos>=SEQ.length){enterGallery();}else{const nx=document.getElementById('ks'+kPos);if(nx){nx.classList.add('active');setTimeout(()=>nx.classList.remove('active'),350);}}
   }else{
-    kPos=0;
-    document.querySelectorAll('.k-step').forEach(s=>s.classList.remove('done','active'));
-    const err=document.getElementById('konami-error');
-    err.textContent='▷ WRONG SEQUENCE — やり直してください ◁';
-    err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
+    kPos=0;document.querySelectorAll('.k-step').forEach(s=>s.classList.remove('done','active'));
+    const err=document.getElementById('konami-error');err.textContent='▷ WRONG SEQUENCE ◁';err.classList.remove('shake');void err.offsetWidth;err.classList.add('shake');
     const f=document.getElementById('ks0');if(f){f.classList.add('active');setTimeout(()=>f.classList.remove('active'),350);}
   }
 }
-
 function enterGallery(){
   const page=document.getElementById('konami-page');
   page.style.transition='opacity .7s ease';page.style.opacity='0';
   setTimeout(()=>{
-    page.style.opacity='1';
-    showPage('home-page');
-    buildVerticalMarquee();
-    syncHomeUI();
-    rebuildSlides();
-    startGifCycle();
-    if(flatPhotos.length>0) startSlideshow();
+    page.style.opacity='1';showPage('home-page');
+    buildVerticalMarquee();syncHomeUI();
+    rebuildSlides();startGifCycle();
+    if(featuredPhotos.length>0) startSlideshow();
     startMusic();
   },700);
 }
-
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('konami-page').classList.contains('active')) return;
   const map={ArrowUp:'ArrowUp',ArrowDown:'ArrowDown',ArrowLeft:'ArrowLeft',ArrowRight:'ArrowRight',b:'b',B:'b',a:'a',A:'a'};
@@ -987,155 +910,193 @@ document.addEventListener('click',e=>{
   feedKonami(btn.dataset.key);
 });
 
-/* ═══════════════════════════════════════════════════
-   VERTICAL MARQUEE — built with JS for reliable scroll
-   Creates double the words so translateY(-50%) loops.
-═══════════════════════════════════════════════════ */
-function buildVerticalMarquee() {
-  const track = document.getElementById('marquee-right-track');
-  track.innerHTML = '';
-  const WORD = 'kashidashi.github.io';
-  // Create 20 copies (10 visible + 10 for loop)
-  for (let i = 0; i < 20; i++) {
-    const span = document.createElement('span');
-    span.className = 'vword';
-    span.textContent = WORD;
-    track.appendChild(span);
-  }
+/* ═══════════════════════════════════════
+   VERTICAL MARQUEE
+═══════════════════════════════════════ */
+function buildVerticalMarquee(){
+  const track=document.getElementById('marquee-right-track');track.innerHTML='';
+  for(let i=0;i<20;i++){const s=document.createElement('span');s.className='vword';s.textContent='Lambdadelta';track.appendChild(s);}
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    GIF CYCLING
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 const GIFS=['GLITCH_BRAINROT2.gif','GLITCH_BRAINROT2b.gif'];
 let gifIdx=0;
 function startGifCycle(){
-  const el=document.getElementById('gif-overlay'); if(!el) return;
+  const el=document.getElementById('gif-overlay');if(!el)return;
   setInterval(()=>{
     gifIdx=(gifIdx+1)%GIFS.length;
-    el.style.transition='opacity 0.3s ease'; el.style.opacity='0';
+    el.style.transition='opacity 0.3s ease';el.style.opacity='0';
     setTimeout(()=>{el.src=GIFS[gifIdx];el.style.opacity='1';},300);
   },4000);
 }
 
-/* ═══════════════════════════════════════════════════
-   SLIDESHOW — uses flatPhotos array
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   SLIDESHOW — uses featuredPhotos only
+═══════════════════════════════════════ */
 function rebuildSlides(){
-  const bg=document.getElementById('slide-bg'); bg.innerHTML='';
-  flatPhotos.forEach((p,i)=>{
+  const bg=document.getElementById('slide-bg');bg.innerHTML='';
+  featuredPhotos.forEach((p,i)=>{
     const d=document.createElement('div');
     d.className='slide-layer'+(i===0?' visible':'');
     d.style.backgroundImage=`url('${p.url}')`;
     bg.appendChild(d);
   });
-  rebuildDots();updateHud();
-}
-function rebuildDots(){
-  const el=document.getElementById('slide-dots'); el.innerHTML='';
-  const max=Math.min(flatPhotos.length,18);
-  for(let i=0;i<max;i++){const d=document.createElement('div');d.className='dot'+(i===currentSlide?' active':'');el.appendChild(d);}
+  updateHud();
 }
 function showSlide(idx){
   document.querySelectorAll('.slide-layer').forEach((l,i)=>l.classList.toggle('visible',i===idx));
-  document.querySelectorAll('#slide-dots .dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
   currentSlide=idx;updateHud();
 }
 function updateHud(){
   document.getElementById('slide-hud').textContent=
-    String(currentSlide+1).padStart(2,'0')+' / '+String(flatPhotos.length).padStart(2,'0');
+    String(currentSlide+1).padStart(2,'0')+' / '+String(featuredPhotos.length).padStart(2,'0');
 }
 function startSlideshow(){
-  clearInterval(slideTimer); if(flatPhotos.length===0) return;
+  clearInterval(slideTimer);if(featuredPhotos.length===0)return;
   showSlide(0);
-  slideTimer=setInterval(()=>showSlide((currentSlide+1)%flatPhotos.length),4000);
+  slideTimer=setInterval(()=>showSlide((currentSlide+1)%featuredPhotos.length),5000);
 }
 function syncHomeUI(){
-  const has=flatPhotos.length>0;
+  const has=featuredPhotos.length>0;
   document.getElementById('slide-hud').style.display=has?'block':'none';
-  document.getElementById('slide-dots').style.display=has?'flex':'none';
 }
 
-/* ═══════════════════════════════════════════════════
-   ARCHIVE — renders folder sections with metadata.
-   "featured" folder always comes first and gets
-   special green highlighted treatment.
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   ARCHIVE — featured always open,
+   other folders are lazy-loading collapsible tabs
+═══════════════════════════════════════ */
 function renderArchive(){
-  const scroll = document.getElementById('archive-scroll');
-  const empty  = document.getElementById('archive-empty');
+  const scroll=document.getElementById('archive-scroll');
+  const empty =document.getElementById('archive-empty');
   document.getElementById('archive-count').textContent=
     `[ ${flatPhotos.length} FILE${flatPhotos.length!==1?'S':''} ]`;
 
-  // Remove old folder sections
-  scroll.querySelectorAll('.folder-section').forEach(el=>el.remove());
+  // Clear old content except the empty-state div
+  scroll.querySelectorAll('.folder-section,.folder-tab').forEach(el=>el.remove());
 
-  if(flatPhotos.length===0){ empty.style.display='flex'; return; }
+  if(flatPhotos.length===0){empty.style.display='flex';return;}
   empty.style.display='none';
 
-  // Sort keys: featured always first, then alphabetical, _root last
-  const keys = Object.keys(photoFolders).sort((a,b)=>{
-    if (a.toLowerCase()==='featured') return -1;
-    if (b.toLowerCase()==='featured') return 1;
-    if (a==='_root') return 1;
-    if (b==='_root') return -1;
+  const keys=Object.keys(photoFolders).sort((a,b)=>{
+    if(a.toLowerCase()==='featured') return -1;
+    if(b.toLowerCase()==='featured') return 1;
+    if(a==='_root') return 1; if(b==='_root') return -1;
     return a.localeCompare(b);
   });
 
-  keys.forEach(folderKey => {
-    const photos   = photoFolders[folderKey];
-    const meta     = parseFolderName(folderKey);
-    const isFeatured = folderKey.toLowerCase() === 'featured';
-    const section  = document.createElement('div');
-    section.className = 'folder-section' + (isFeatured ? ' featured' : '');
+  keys.forEach(folderKey=>{
+    const photos    =photoFolders[folderKey];
+    const meta      =parseFolderName(folderKey);
+    const isFeatured=folderKey.toLowerCase()==='featured';
 
-    // Metadata pills
-    const metaParts = [];
-    if (meta.location) metaParts.push(`<div class="folder-meta-item"><span class="meta-label">LOCATION</span><span class="meta-value">${meta.location}</span></div>`);
-    if (meta.date)     metaParts.push(`<div class="folder-meta-item"><span class="meta-label">DATE</span><span class="meta-value">${meta.date}</span></div>`);
-    if (meta.filmType) metaParts.push(`<div class="folder-meta-item"><span class="meta-label">FILM</span><span class="meta-value">${meta.filmType}</span></div>`);
-    metaParts.push(`<div class="folder-meta-item"><span class="meta-label">FILES</span><span class="meta-value">${photos.length}</span></div>`);
-
-    const badge = isFeatured ? `<span class="featured-badge">Featured</span>` : '';
-
-    section.innerHTML = `
-      <div class="folder-header">
-        <span class="folder-name">${meta.name}${badge}</span>
-        <div class="folder-meta">${metaParts.join('')}</div>
-      </div>
-      <div class="photo-grid" id="grid-${CSS.escape(folderKey)}"></div>
-    `;
-    scroll.appendChild(section);
-
-    const grid = section.querySelector('.photo-grid');
-    photos.forEach(p => {
-      const globalIdx = flatPhotos.indexOf(p);
-      const card = document.createElement('div');
-      card.className='grid-card';
-      card.innerHTML=`
-        <img src="${p.url}" alt="${p.name}" loading="lazy">
-        <div class="grid-num">No.${String(globalIdx+1).padStart(3,'0')}</div>
-        <div class="grid-overlay"><span>${p.name.replace(/\.[^.]+$/,'')}</span></div>
+    if(isFeatured){
+      // Featured: always expanded, special styling
+      const section=document.createElement('div');
+      section.className='folder-section featured';
+      const metaParts=buildMetaParts(meta,photos.length);
+      const badge=`<span class="featured-badge">Featured</span>`;
+      section.innerHTML=`
+        <div class="folder-header">
+          <span class="folder-name">${meta.name}${badge}</span>
+          <div class="folder-meta">${metaParts}</div>
+        </div>
+        <div class="photo-grid" id="grid-featured"></div>
       `;
-      card.addEventListener('click',()=>openLightbox(globalIdx));
-      grid.appendChild(card);
-    });
+      scroll.appendChild(section);
+      const grid=section.querySelector('.photo-grid');
+      photos.forEach(p=>{appendCard(grid,p);});
+
+    } else {
+      // Non-featured: collapsible folder tab, lazy loads images on open
+      const tab=document.createElement('div');
+      tab.className='folder-tab';
+      tab.dataset.folder=folderKey;
+      const metaParts=buildMetaParts(meta,photos.length);
+      tab.innerHTML=`
+        <button class="folder-tab-btn" aria-expanded="false">
+          <div class="folder-tab-inner">
+            <div class="folder-tab-left">
+              <span class="folder-icon">📁</span>
+              <div>
+                <div class="folder-name">${meta.name}</div>
+                <div class="folder-meta">${metaParts}</div>
+              </div>
+            </div>
+            <div class="folder-tab-right">
+              <span class="folder-count">${photos.length} FILE${photos.length!==1?'S':''}</span>
+              <span class="folder-chevron">▶</span>
+            </div>
+          </div>
+        </button>
+        <div class="folder-loading"><span class="folder-loading-spinner"></span>LOADING…</div>
+        <div class="folder-grid-wrap">
+          <div class="photo-grid" id="grid-${CSS.escape(folderKey)}"></div>
+        </div>
+      `;
+      scroll.appendChild(tab);
+
+      // Toggle open/close; lazy load images on first open
+      const btn=tab.querySelector('.folder-tab-btn');
+      let loaded=false;
+      btn.addEventListener('click',()=>{
+        const isOpen=tab.classList.contains('open');
+        if(!isOpen){
+          tab.classList.add('open');
+          btn.setAttribute('aria-expanded','true');
+          if(!loaded){
+            loaded=true;
+            tab.classList.add('loading');
+            // Small delay to let the UI open first, then populate grid
+            setTimeout(()=>{
+              const grid=tab.querySelector('.photo-grid');
+              photos.forEach(p=>{appendCard(grid,p);});
+              tab.classList.remove('loading');
+            },80);
+          }
+        } else {
+          tab.classList.remove('open');
+          btn.setAttribute('aria-expanded','false');
+        }
+      });
+    }
   });
 }
 
-/* ═══════════════════════════════════════════════════
-   LIGHTBOX
-═══════════════════════════════════════════════════ */
-function openLightbox(idx){lbIdx=idx;renderLightbox();document.getElementById('lightbox').classList.add('open');}
+function buildMetaParts(meta,count){
+  const parts=[];
+  if(meta.location&&meta.name!==meta.location) parts.push(`<div class="folder-meta-item"><span class="meta-label">LOC</span><span class="meta-value">${meta.location}</span></div>`);
+  if(meta.date)     parts.push(`<div class="folder-meta-item"><span class="meta-label">DATE</span><span class="meta-value">${meta.date}</span></div>`);
+  if(meta.filmType) parts.push(`<div class="folder-meta-item"><span class="meta-label">FILM</span><span class="meta-value">${meta.filmType}</span></div>`);
+  return parts.join('');
+}
 
+function appendCard(grid,p){
+  const globalIdx=flatPhotos.indexOf(p);
+  const card=document.createElement('div');
+  card.className='grid-card';
+  card.innerHTML=`
+    <img src="${p.url}" alt="${p.name}" loading="lazy">
+    <div class="grid-num">No.${String(globalIdx+1).padStart(3,'0')}</div>
+    <div class="grid-overlay"><span>${p.name.replace(/\.[^.]+$/,'')}</span></div>
+  `;
+  card.addEventListener('click',()=>openLightbox(globalIdx));
+  grid.appendChild(card);
+}
+
+/* ═══════════════════════════════════════
+   LIGHTBOX
+═══════════════════════════════════════ */
+function openLightbox(idx){lbIdx=idx;renderLightbox();document.getElementById('lightbox').classList.add('open');}
 function renderLightbox(){
-  const p=flatPhotos[lbIdx]; if(!p) return;
+  const p=flatPhotos[lbIdx];if(!p)return;
   const fill=document.getElementById('lb-fill');
   fill.style.transition='none';fill.style.width='0';
   setTimeout(()=>{fill.style.transition='width .75s ease';fill.style.width='65%';},30);
   setTimeout(()=>fill.style.width='100%',450);
   setTimeout(()=>{fill.style.transition='none';fill.style.width='0';},1100);
-  const img=document.getElementById('lb-img'); img.src='';
+  const img=document.getElementById('lb-img');img.src='';
   setTimeout(()=>img.src=p.url,60);
   document.getElementById('lb-title').textContent=p.name+' - Windows Internet Explorer';
   document.getElementById('lb-url').textContent='C:\\Photos\\'+p.name;
@@ -1144,37 +1105,33 @@ function renderLightbox(){
   document.getElementById('lb-status').textContent='Done';
   document.getElementById('lb-counter').textContent=(lbIdx+1)+' / '+flatPhotos.length;
 }
-
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
 document.getElementById('lb-close').addEventListener('click',closeLightbox);
 document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});
 document.getElementById('lb-prev').addEventListener('click',()=>{lbIdx=(lbIdx-1+flatPhotos.length)%flatPhotos.length;renderLightbox();});
 document.getElementById('lb-next').addEventListener('click',()=>{lbIdx=(lbIdx+1)%flatPhotos.length;renderLightbox();});
 document.addEventListener('keydown',e=>{
-  if(!document.getElementById('lightbox').classList.contains('open')) return;
-  if(e.key==='Escape') closeLightbox();
+  if(!document.getElementById('lightbox').classList.contains('open'))return;
+  if(e.key==='Escape')closeLightbox();
   if(e.key==='ArrowLeft'){lbIdx=(lbIdx-1+flatPhotos.length)%flatPhotos.length;renderLightbox();}
   if(e.key==='ArrowRight'){lbIdx=(lbIdx+1)%flatPhotos.length;renderLightbox();}
 });
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    NAV
-═══════════════════════════════════════════════════ */
-function goHome(){
-  showPage('home-page');syncHomeUI();
-  if(flatPhotos.length>0) startSlideshow(); else clearInterval(slideTimer);
-}
+═══════════════════════════════════════ */
+function goHome(){showPage('home-page');syncHomeUI();if(featuredPhotos.length>0)startSlideshow();else clearInterval(slideTimer);}
 function goArchive(){clearInterval(slideTimer);renderArchive();showPage('archive-page');}
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════
    BOOT
-═══════════════════════════════════════════════════ */
-window.addEventListener('load', async () => {
+═══════════════════════════════════════ */
+window.addEventListener('load',async()=>{
   buildKonamiUI();
   await loadManifests();
   document.getElementById('loading-screen').classList.add('gone');
   showPage('ps2-page');
-  setTimeout(runPS2, 200);
+  setTimeout(runPS2,200);
 });
 </script>
 </body>
